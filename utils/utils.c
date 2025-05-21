@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/20 16:51:49 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/21 17:11:52 by obouizi          ###   ########.fr       */
+/*   Created: 2025/05/21 15:08:24 by obouizi           #+#    #+#             */
+/*   Updated: 2025/05/21 16:16:28 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
-int main(int ac, char *av[])
+void	put_error(char	*msg, t_data *data, bool sys_error)
 {
-    t_data  data;
+	ft_putstr_fd(msg, 2);
+	if (sys_error)
+		ft_putstr_fd(strerror(errno), 2);
+	ft_putstr_fd("\n", 2);
+	data->exit_status = EXIT_FAILURE;
+	clean_exit(data);
+}
+
+void	clean_exit(t_data *data)
+{
+	if (data)
+		return (free_garbage(), exit(EXIT_FAILURE));
 	
-    if (ac != 2)
-		return (write(2, "Error\nInvalid args\n", 20), 1);
-	ft_memset(&data, 0, sizeof(t_data));
-	parse_map(&data, av + 1);
-	free_garbage();// temporary until we init mlx
-    return (0);
+	free_garbage();
+	exit(data->exit_status);
 }

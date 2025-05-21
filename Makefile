@@ -1,11 +1,12 @@
-PARSING = get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
-SRCS +=  main.c $(PARSING)
+PARSING = parsing/get_next_line/get_next_line.c parsing/get_next_line/get_next_line_utils.c parsing/parser.c
+UTILS = utils/utils.c utils/init.c
+SRCS +=  main.c $(PARSING) $(UTILS)
 LIBFT = libft/libft.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 MLX_LIB = mlx/libmlx_Linux.a -lX11 -lXext -lm
 OBJS = $(SRCS:.c=.o)
-INCLUDES = cub3d.h
+INCLUDES = cub3d.h parsing/get_next_line/get_next_line.h
 NAME = cub3D
 
 all: $(NAME)
