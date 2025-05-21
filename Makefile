@@ -1,5 +1,6 @@
-PARSING = parsing/get_next_line/get_next_line.c parsing/get_next_line/get_next_line_utils.c parsing/parser.c
-UTILS = utils/utils.c utils/init.c
+PARSING = parsing/get_next_line/get_next_line.c parsing/get_next_line/get_next_line_utils.c parsing/parser.c \
+parsing/set_identifiers.c
+UTILS = utils/utils.c utils/init.c utils/helpers.c
 SRCS +=  main.c $(PARSING) $(UTILS)
 LIBFT = libft/libft.a
 CC = cc

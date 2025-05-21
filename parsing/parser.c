@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:00:12 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/21 17:01:59 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/21 19:54:26 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static void	is_valid_file(const char *map_path, t_data *data)
 	len = ft_strlen(map_path);
 	if (len < 5 || ft_strncmp(&map_path[ft_strlen(map_path) - 4], ".cub", 4)
 		|| map_path[len - 5] == '/')
-		put_error("Error\nOnly valid \".cub\" map files are allowed!", data, false);
+		put_error("Error\nOnly valid \".cub\" map files are allowed!",
+			data, false);
 	fd = open(map_path, O_RDONLY);
 	if (fd == -1)
 		put_error("Error\nError opening map file : ", data, true);
@@ -56,4 +57,5 @@ static void	is_valid_file(const char *map_path, t_data *data)
 void	parse_map(t_data *data, char *av[])
 {
 	is_valid_file(*av, data);
+	set_identifiers(*av, data);
 }

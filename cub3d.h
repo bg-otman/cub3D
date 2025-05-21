@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/21 17:15:57 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/21 19:51:16 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ typedef struct s_data
 // utils
 void	put_error(char	*msg, t_data *data, bool sys_error);
 void	clean_exit(t_data *data);
+bool	ft_isspace(char c);
+int		skip_spacess(const char *str);
 // parsing
 void	parse_map(t_data *data, char *av[]);
+void	set_identifiers(const char *map_path, t_data *data);
 
 #endif
