@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/21 19:51:16 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/22 20:09:08 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define S_KEY 115
 # define D_KEY 100
 # define W_KEY 119
+# define WHITE_SPACES " \t\n\v\f\r"
 
 typedef struct s_image
 {
@@ -61,8 +62,8 @@ typedef struct s_data
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_image	*img_wall;
-	t_color	floor;
-	t_color	ceiling;
+	t_color	*floor;
+	t_color	*ceiling;
 	int		map_height;
 	int		map_width;
 	int		player_x;
@@ -77,7 +78,9 @@ void	clean_exit(t_data *data);
 bool	ft_isspace(char c);
 int		skip_spacess(const char *str);
 // parsing
+void	read_map(const char *map_path, int offset, t_data *data);
+void	get_map_data(const char *map_path, t_data *data);
 void	parse_map(t_data *data, char *av[]);
-void	set_identifiers(const char *map_path, t_data *data);
+void	map_len(int fd, t_data *data);
 
 #endif

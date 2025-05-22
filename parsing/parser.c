@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:00:12 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/21 19:54:26 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/22 15:56:01 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ static bool	check_min_dimension(int fd)
 	while (tmp)
 	{
 		height++;
-		while (width < 13 && tmp[width++])
+		while (width < 6 && tmp[width++])
 			; // this while will count min width
 		tmp = get_next_line(fd);
 	}
-	if (height < 11 || width < 13)
+	if (height < 11 || width < 6)
 		return (false);
 	return (true);
 }
@@ -57,5 +57,6 @@ static void	is_valid_file(const char *map_path, t_data *data)
 void	parse_map(t_data *data, char *av[])
 {
 	is_valid_file(*av, data);
-	set_identifiers(*av, data);
+	get_map_data(*av, data);
+	// read_map(*av, data);
 }
