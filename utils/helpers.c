@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 18:24:23 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/21 18:25:02 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/23 15:55:41 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,32 @@
 
 bool	ft_isspace(char c)
 {
-    return (c == ' ' || c == '\t' || c == '\n'
-        || c == '\v' || c == '\f' || c == '\r');
+	return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
+		|| c == '\r');
 }
-
 
 int	skip_spacess(const char *str)
 {
-    int i;
+	int	i;
 
 	i = 0;
-    while (str && str[i] && ft_isspace(str[i]))
-        i++;
-    return (i);
+	while (str && str[i] && ft_isspace(str[i]))
+		i++;
+	return (i);
+}
+
+bool	is_valid_char(char c)
+{
+	return (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W');
+}
+
+bool	is_line_empty(char *line)
+{
+	while (*line)
+	{
+		if (!ft_isspace(*line))
+			return (false);
+		line++;
+	}
+	return (true);
 }
