@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:07:45 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/23 16:49:44 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/23 20:25:45 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	check_walls(char **map, t_data *data)
 	i = 1;
 	while (i < data->map_height - 1)
 	{
+		if (!ft_isspace(map[i][0]) && map[i][0] != '1')
+			put_error("Error\nInvalid map", data, false);
 		check_is_surrounded(map[i - 1], map[i], map[i + 1], data);
 		i++;
 	}
