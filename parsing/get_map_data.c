@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 19:50:33 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/23 16:15:06 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/23 19:18:01 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,12 +120,16 @@ void	get_map_data(const char *map_path, t_data *data)
 	while (tmp)
 	{
 		offset++;
+		// aymane dir hadik !!!!
 		set_identifiers(tmp, fd, data);
 		if (data->ea_path && data->no_path && data->so_path
 			&& data->we_path && data->floor && data->ceiling)
 			break ;
 		tmp = get_next_line(fd);
 	}
+	if (!(data->ea_path && data->no_path && data->so_path
+		&& data->we_path && data->floor && data->ceiling))
+		put_error("Error\nInvalid map", data, false);
 	map_len(fd, data);
 	read_map(map_path, offset, data);
 }
