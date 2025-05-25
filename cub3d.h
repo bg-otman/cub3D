@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/23 19:03:11 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/25 16:56:45 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@
 # define D_KEY 100
 # define W_KEY 119
 # define WHITE_SPACES " \t\n\v\f\r"
+# define WIN_WIDTH 1500
+# define WIN_HEIGHT 800
+# define MOVE_SPEED 40
+# define PLAYER_SIZE 40
+# define BLOCK_SIZE 40
 
 typedef struct s_image
 {
@@ -62,6 +67,7 @@ typedef struct s_data
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_image	*img_wall;
+	t_image	*buffer;
 	t_color	*floor;
 	t_color	*ceiling;
 	int		map_height;
@@ -72,18 +78,29 @@ typedef struct s_data
 	char	player_dir;
 } t_data;
 
+// main
+void	draw(t_data *data);
 // utils
 void	put_error(char	*msg, t_data *data, bool sys_error);
-void	clean_exit(t_data *data);
+void	init_buffer(t_data *data);
+void	put_pixel_to_buffer(t_image *img, int x, int y, int color);
+void	clear_buffer_img(t_image *buffer, int color);
+bool	check_textures(char *line);
 bool	is_line_empty(char *line);
 bool	is_valid_char(char c);
 bool	ft_isspace(char c);
+bool	is_valid_key(int key);
 int		skip_spacess(const char *str);
+int		clean_exit(t_data *data);
 // parsing
 void	read_map(const char *map_path, int offset, t_data *data);
 void	get_map_data(const char *map_path, t_data *data);
 void	check_walls(char **map, t_data *data);
 void	parse_map(t_data *data, char *av[]);
 void	map_len(int fd, t_data *data);
+// minimap
+void	draw_player(t_data *data, int square_size, int x, int y);
+void	draw_minimap(char **map, t_data *data);
+void	move_player(int key, t_data *data);
 
 #endif
