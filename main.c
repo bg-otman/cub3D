@@ -6,34 +6,11 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:49 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/25 16:55:07 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/28 06:21:30 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	get_player_pos(char **map, t_data *data)
-{
-	int i;
-	int j;
-	
-	i = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == 'N')
-			{
-				data->player_x = i;
-				data->player_y = j;
-				break ;
-			}
-			j++;
-		}
-		i++;
-	}
-}
 
 int	key_press(int key, t_data *data)
 {
@@ -48,9 +25,8 @@ int	key_press(int key, t_data *data)
 void	draw(t_data *data)
 {
 	clear_buffer_img(data->buffer, 0x000000);
-	// get_player_pos(data->map, data);
 	draw_minimap(data->map, data);
-	draw_player(data, PLAYER_SIZE, data->player_x, data->player_y);
+	draw_player(data, data->player->x, data->player->y);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->buffer->img_ptr,
 		0, 0);
 }
@@ -66,6 +42,7 @@ int	main(int ac, char *av[])
 	data.mlx_ptr = mlx_init();
 	data.win_ptr = mlx_new_window(data.mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "Cub3D");
 	init_buffer(&data);
+	init_player(&data);
 	draw(&data);
 	mlx_hook(data.win_ptr, 2, 1L << 0, key_press, (t_data *)&data);
 	mlx_hook(data.win_ptr, 17, 0, clean_exit, (t_data *)&data);

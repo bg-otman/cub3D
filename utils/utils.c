@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:08:24 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/25 15:17:00 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/27 16:13:49 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,28 @@ bool	check_textures(char *line)
 	if (!ft_isspace(line[i]))
 		return (false);
 	return (true);
+}
+
+void	get_player_pos(char **map, int	*x, int	*y)
+{
+	int pos_x;
+	int pos_y;
+	
+	pos_y = 0;
+	while (map[pos_y])
+	{
+		pos_x = 0;
+		while (map[pos_y][pos_x])
+		{
+			if (map[pos_y][pos_x] == 'N' || map[pos_y][pos_x] == 'W'
+				|| map[pos_y][pos_x] == 'S' || map[pos_y][pos_x] == 'E')
+			{
+				*x = MINIMAP_OFFSET_X + pos_x * TILE_SIZE;
+				*y = MINIMAP_OFFSET_Y + pos_y * TILE_SIZE;
+				break ;
+			}
+			pos_x++;
+		}
+		pos_y++;
+	}
 }

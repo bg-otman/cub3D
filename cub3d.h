@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/25 16:56:45 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/27 15:55:46 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <errno.h>
 # include <string.h>
 # include <stdbool.h>
+# include <math.h>
 
 # define ESCAPE 65307
 # define RIGHT 65363
@@ -36,9 +37,10 @@
 # define WHITE_SPACES " \t\n\v\f\r"
 # define WIN_WIDTH 1500
 # define WIN_HEIGHT 800
-# define MOVE_SPEED 40
-# define PLAYER_SIZE 40
-# define BLOCK_SIZE 40
+# define PLAYER_SIZE 30
+# define TILE_SIZE 30
+# define MINIMAP_OFFSET_X TILE_SIZE
+# define MINIMAP_OFFSET_Y TILE_SIZE
 
 typedef struct s_image
 {
@@ -57,25 +59,34 @@ typedef struct s_color {
 	int	b;
 } t_color;
 
+typedef struct s_player
+{
+	int		x;
+	int		y;
+	double	radius;
+    double	angle;
+    double	rotation_speed;
+    double	move_speed;
+} t_player;
+
 typedef struct s_data
 {
-	char	**map;
-	char	*no_path;
-	char	*so_path;
-	char	*we_path;
-	char	*ea_path;
-	void	*mlx_ptr;
-	void	*win_ptr;
-	t_image	*img_wall;
-	t_image	*buffer;
-	t_color	*floor;
-	t_color	*ceiling;
-	int		map_height;
-	int		map_width;
-	int		player_x;
-	int		player_y;
-	int		exit_status;
-	char	player_dir;
+	char		**map;
+	char		*no_path;
+	char		*so_path;
+	char		*we_path;
+	char		*ea_path;
+	void		*mlx_ptr;
+	void		*win_ptr;
+	t_image		*img_wall;
+	t_image		*buffer;
+	t_color		*floor;
+	t_color		*ceiling;
+	t_player	*player;
+	int			map_height;
+	int			map_width;
+	int			exit_status;
+	char		player_dir;
 } t_data;
 
 // main
@@ -84,7 +95,9 @@ void	draw(t_data *data);
 void	put_error(char	*msg, t_data *data, bool sys_error);
 void	init_buffer(t_data *data);
 void	put_pixel_to_buffer(t_image *img, int x, int y, int color);
+void	get_player_pos(char **map, int *x, int *y);
 void	clear_buffer_img(t_image *buffer, int color);
+void	init_player(t_data *data);
 bool	check_textures(char *line);
 bool	is_line_empty(char *line);
 bool	is_valid_char(char c);
@@ -99,7 +112,7 @@ void	check_walls(char **map, t_data *data);
 void	parse_map(t_data *data, char *av[]);
 void	map_len(int fd, t_data *data);
 // minimap
-void	draw_player(t_data *data, int square_size, int x, int y);
+void	draw_player(t_data *data, int x, int y);
 void	draw_minimap(char **map, t_data *data);
 void	move_player(int key, t_data *data);
 
