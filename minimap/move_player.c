@@ -6,50 +6,26 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:10:15 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/28 06:34:34 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/28 12:12:00 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-bool	is_wall(char **map, int	x, int	y)
+bool	is_wall(char **map, int x, int y)
 {
 	int	map_x;
 	int	map_y;
 
-	map_x = x / TILE_SIZE;
-	map_y = y / TILE_SIZE;
+	map_x = (x / TILE_SIZE) - 1;
+	map_y = (y / TILE_SIZE) - 1;
 	if (map_y < 0 || !map[map_y])
 		return (true);
-
-	if (map_x < 0 || map_x >= (int) ft_strlen(map[map_y]))
+	if (map_x < 0 || map_x >= (int)ft_strlen(map[map_y]))
 		return (true);
-
 	if (map[map_y][map_x] == '1')
 		return (true);
-
 	return (false);
-}
-
-int	get_remaining_dist(t_data *data, int speed, int key)
-{
-	bool	res;
-	
-	res = true;
-	while (--speed > 0)
-	{
-		if (key == D_KEY)
-			res = is_wall(data->map, data->player->x + speed, data->player->y);
-		else if (key == A_KEY)
-			res = is_wall(data->map, data->player->x - speed, data->player->y);
-		else if (key == W_KEY)
-			res = is_wall(data->map, data->player->x, data->player->y - speed);
-		else if (S_KEY)
-			res = is_wall(data->map, data->player->x, data->player->y + speed);
-		if (!res)
-			return (speed);
-	}
-	return (0);
 }
 
 void	horizontal_moves(int key, t_data *data)
@@ -59,15 +35,18 @@ void	horizontal_moves(int key, t_data *data)
 	speed = data->player->move_speed;
 	if (key == D_KEY)
 	{
-		if (is_wall(data->map, data->player->x + speed, data->player->y))
-			speed = get_remaining_dist(data, speed, key);
-		data->player->x += speed;
+		if (!(is_wall(data->map, data->player->x + speed + PLAYER_SIZE - 1,
+					data->player->y) || is_wall(data->map, data->player->x
+					+ speed + PLAYER_SIZE - 1, data->player->y + PLAYER_SIZE
+					- 1)))
+			data->player->x += speed;
 	}
 	else if (key == A_KEY)
 	{
-		if (is_wall(data->map, data->player->x - speed - PLAYER_SIZE, data->player->y))
-			speed = get_remaining_dist(data, speed - PLAYER_SIZE, key);
-		data->player->x -= speed;
+		if (!(is_wall(data->map, data->player->x - speed, data->player->y)
+				|| is_wall(data->map, data->player->x - speed, data->player->y
+					+ PLAYER_SIZE - 1)))
+			data->player->x -= speed;
 	}
 }
 
@@ -78,15 +57,18 @@ void	vertical_moves(int key, t_data *data)
 	speed = data->player->move_speed;
 	if (key == S_KEY)
 	{
-		if (is_wall(data->map, data->player->x, data->player->y + speed))
-			speed = get_remaining_dist(data, speed, key);
-		data->player->y += speed;
+		if (!(is_wall(data->map, data->player->x, data->player->y + speed
+					+ PLAYER_SIZE - 1) || is_wall(data->map, data->player->x
+					+ PLAYER_SIZE - 1, data->player->y + speed + PLAYER_SIZE
+					- 1)))
+			data->player->y += speed;
 	}
 	else if (key == W_KEY)
 	{
-		if (is_wall(data->map, data->player->x, data->player->y - speed - PLAYER_SIZE + 1))
-			speed = get_remaining_dist(data, speed - PLAYER_SIZE + 1, key);
-		data->player->y -= speed;
+		if (!(is_wall(data->map, data->player->x, data->player->y - speed)
+				|| is_wall(data->map, data->player->x + PLAYER_SIZE - 1,
+					data->player->y - speed)))
+			data->player->y -= speed;
 	}
 }
 
