@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:10:15 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/28 12:12:00 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/29 14:56:59 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,29 +72,74 @@ void	vertical_moves(int key, t_data *data)
 	}
 }
 
+void	rotate_player(int key, t_data *data)
+{
+	if (key == RIGHT)
+		data->player->angle += 0.1;
+	else if (key == LEFT)
+		data->player->angle -= 0.1;
+
+	if (data->player->angle < 0)
+		data->player->angle += 2 * M_PI;
+	else if (data->player->angle > 2 * M_PI)
+		data->player->angle -= 2 * M_PI;
+}
+
+
 void	move_player(int key, t_data *data)
 {
+	if (key == RIGHT || key == LEFT)
+		rotate_player(key, data);
 	if (key == D_KEY || key == A_KEY)
 		horizontal_moves(key, data);
 	else if (key == S_KEY || key == W_KEY)
 		vertical_moves(key, data);
 }
 
-void	draw_player(t_data *data, int x, int y)
+void	draw_direction(t_data *data, int x, int y)
 {
-	int	height;
-	int	width;
-	int	start_x;
+	double	current_x;
+	double	current_y;
+	int		i;
+	int		len;
+
+	i = 0;
+	len = 100;
+	while (i < len)
+	{
+		current_x = x + cos(data->player->angle) * i;
+		current_y = y + sin(data->player->angle) * i;
+		put_pixel_to_buffer(data->buffer, current_x, current_y, 0x29ab87);
+		i++;
+	}
+}
+
+void	draw_player(t_data *data, double x, double y)
+{
+	int		height;
+	int		width;
+	double	start_x;
+	double	rotated_x;
+	double	rotated_y;
+	double	center_x;
+	double	center_y;
+
+	center_x = x + PLAYER_SIZE / 2;
+	center_y = y + PLAYER_SIZE / 2;
 
 	start_x = x;
-	height = y + PLAYER_SIZE;
-	width = x + PLAYER_SIZE;
+	height = (int)y + PLAYER_SIZE;
+	width = (int)x + PLAYER_SIZE;
+
 	while (y < height)
 	{
 		x = start_x;
 		while (x < width)
 		{
-			put_pixel_to_buffer(data->buffer, x, y, 0xFF0000);
+			rotated_x = (x - center_x) * cos(data->player->angle) - (y - center_y) * sin(data->player->angle) + center_x;
+			rotated_y = (x - center_x) * sin(data->player->angle) + (y - center_y)  * cos(data->player->angle) + center_y;
+			
+			put_pixel_to_buffer(data->buffer, rotated_x, rotated_y, 0xFF0000);
 			x++;
 		}
 		y++;

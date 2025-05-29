@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/28 08:52:52 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/29 14:57:16 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ typedef struct s_color {
 
 typedef struct s_player
 {
-	int		x;
-	int		y;
+	double		x;
+	double		y;
 	double	radius;
     double	angle;
     double	rotation_speed;
@@ -95,7 +95,7 @@ void	draw(t_data *data);
 void	put_error(char	*msg, t_data *data, bool sys_error);
 void	init_buffer(t_data *data);
 void	put_pixel_to_buffer(t_image *img, int x, int y, int color);
-void	get_player_pos(char **map, int *x, int *y);
+void	get_player_pos(char **map, double *x, double *y);
 void	clear_buffer_img(t_image *buffer, int color);
 void	init_player(t_data *data);
 bool	check_textures(char *line);
@@ -112,8 +112,9 @@ void	check_walls(char **map, t_data *data);
 void	parse_map(t_data *data, char *av[]);
 void	map_len(int fd, t_data *data);
 // minimap
-void	draw_player(t_data *data, int x, int y);
+void	draw_player(t_data *data, double x, double y);
 void	draw_minimap(char **map, t_data *data);
+void	draw_direction(t_data *data, int x, int y);
 void	move_player(int key, t_data *data);
 
 #endif

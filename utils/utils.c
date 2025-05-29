@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:08:24 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/27 16:13:49 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/29 12:10:03 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ bool	check_textures(char *line)
 	return (true);
 }
 
-void	get_player_pos(char **map, int	*x, int	*y)
+void	get_player_pos(char **map, double	*x, double	*y)
 {
 	int pos_x;
 	int pos_y;
