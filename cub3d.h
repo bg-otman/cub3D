@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/30 10:20:23 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/30 15:07:15 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,10 @@ void	check_walls(char **map, t_data *data);
 void	parse_map(t_data *data, char *av[]);
 void	map_len(int fd, t_data *data);
 // minimap
-void draw_player(t_data *data, int center_x, int center_y, int radius);
-// void	draw_player(t_data *data, double x, double y);
+void	draw_player(t_data *data, int center_x, int center_y, int radius);
 void	draw_minimap(char **map, t_data *data);
 void	player_rotation(int key, t_data *data);
 void	move_player(int key, t_data *data);
-void	draw_direction(t_data *data);
+void	draw_direction(t_data *data, int len);
 
 #endif
