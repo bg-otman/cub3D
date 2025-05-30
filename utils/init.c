@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:11:43 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/29 14:57:10 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/30 10:08:04 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,21 @@ void	init_buffer(t_data *data)
 
 void	init_player(t_data *data)
 {
-	data->player = ft_malloc(sizeof(t_player));
-	ft_bzero(data->player, sizeof(t_player));
-	data->player->move_speed = 5;
-	get_player_pos(data->map, &data->player->x, &data->player->y);
+	t_player *player;
+	
+	player = ft_malloc(sizeof(t_player));
+	data->player = player;
+	ft_bzero(player, sizeof(t_player));
+	player->move_speed = 3;
+	player->dx = cos(player->angle) * player->move_speed;
+	player->dy = sin(player->angle) * player->move_speed;
+	get_player_pos(data->map, &player->x, &player->y, &player->direction);
+	if (player->direction == 'N')
+		player->angle = -M_PI / 2;
+	else if (player->direction == 'S')
+		player->angle = M_PI / 2;
+	else if (player->direction == 'W')
+		player->angle = M_PI;
+	else
+		player->angle = 0;
 }
