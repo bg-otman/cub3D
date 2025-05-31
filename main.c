@@ -28,7 +28,8 @@ void	draw(t_data *data)
 	draw_minimap(data->map, data);
 	draw_player(data, data->player->x + PLAYER_SIZE / 2,
 		data->player->y + PLAYER_SIZE / 2, PLAYER_SIZE / 2);
-	draw_direction(data, 100);
+	// draw_direction(data, WIN_WIDTH);
+	field_of_view(data, data->player);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->buffer->img_ptr,
 		0, 0);
 }

@@ -35,12 +35,16 @@
 # define D_KEY 100
 # define W_KEY 119
 # define WHITE_SPACES " \t\n\v\f\r"
-# define WIN_WIDTH 1500
-# define WIN_HEIGHT 800
+# define WIN_WIDTH 1000
+# define WIN_HEIGHT 500
 # define PLAYER_SIZE 20
 # define TILE_SIZE 30
 # define MINIMAP_OFFSET_X TILE_SIZE
 # define MINIMAP_OFFSET_Y TILE_SIZE
+# define RAY_COLOR 0x29ab87
+# define MAX_RAY_LENGTH WIN_WIDTH
+# define NUM_RAYS 50
+# define FOV (M_PI / 4)
 
 typedef struct s_image
 {
@@ -58,6 +62,20 @@ typedef struct s_color {
 	int	g;
 	int	b;
 } t_color;
+
+typedef struct s_cast
+{
+	int		x0;
+	int		y0;
+	int		x1;
+	int		y1;
+	int		dx;
+	int		dy;
+	int		sx;
+	int		sy;
+	int		tmp;
+	int		err;
+} t_cast;
 
 typedef struct s_player
 {
@@ -85,6 +103,7 @@ typedef struct s_data
 	t_image		*buffer;
 	t_color		*floor;
 	t_color		*ceiling;
+	t_cast		*cast;
 	t_player	*player;
 	int			map_height;
 	int			map_width;
@@ -118,6 +137,8 @@ void	draw_player(t_data *data, int center_x, int center_y, int radius);
 void	draw_minimap(char **map, t_data *data);
 void	player_rotation(int key, t_data *data);
 void	move_player(int key, t_data *data);
-void	draw_direction(t_data *data, int len);
+// void	draw_direction(t_data *data, int len);
+void	field_of_view(t_data *data, t_player *player);
+bool	is_wall(char **map, int x, int y);
 
 #endif
