@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/30 15:07:15 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/01 17:35:11 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,21 @@
 # define D_KEY 100
 # define W_KEY 119
 # define WHITE_SPACES " \t\n\v\f\r"
-# define WIN_WIDTH 1000
-# define WIN_HEIGHT 500
+# define WIN_WIDTH 1500
+# define WIN_HEIGHT 800
 # define PLAYER_SIZE 20
 # define TILE_SIZE 30
 # define MINIMAP_OFFSET_X TILE_SIZE
 # define MINIMAP_OFFSET_Y TILE_SIZE
+# define MINIMAP_SCALE 0.3
+# define MM_TILE_SIZE (TILE_SIZE * MINIMAP_SCALE)
+# define MM_OFFSET_X 20
+# define MM_OFFSET_Y 20
 # define RAY_COLOR 0x29ab87
 # define MAX_RAY_LENGTH WIN_WIDTH
-# define NUM_RAYS 50
+# define NUM_RAYS 100
 # define FOV (M_PI / 4)
+
 
 typedef struct s_image
 {
@@ -137,7 +142,6 @@ void	draw_player(t_data *data, int center_x, int center_y, int radius);
 void	draw_minimap(char **map, t_data *data);
 void	player_rotation(int key, t_data *data);
 void	move_player(int key, t_data *data);
-// void	draw_direction(t_data *data, int len);
 void	field_of_view(t_data *data, t_player *player);
 bool	is_wall(char **map, int x, int y);
 

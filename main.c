@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:49 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/30 15:07:03 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/01 15:59:36 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	draw(t_data *data)
 	draw_minimap(data->map, data);
 	draw_player(data, data->player->x + PLAYER_SIZE / 2,
 		data->player->y + PLAYER_SIZE / 2, PLAYER_SIZE / 2);
-	// draw_direction(data, WIN_WIDTH);
 	field_of_view(data, data->player);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->buffer->img_ptr,
 		0, 0);

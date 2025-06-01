@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 15:43:09 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/30 15:09:52 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/01 17:35:48 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,41 +30,30 @@ void	player_rotation(int key, t_data *data)
 }
 
 /*
-// void	draw_direction(t_data *data, int x, int y, double angle)
-// {
-// 	double	current_x;
-// 	double	current_y;
-// 	int		i;
-// 	int		len;
-
-// 	len = WIN_WIDTH;
-// 	i = 0;
-// 	while (i < len)
-// 	{
-// 		current_x = x + cos(angle) * i;
-// 		current_y = y + sin(angle) * i;
-// 		if (is_wall(data->map, current_x, current_y))
-// 			break ;
-// 		put_pixel_to_buffer(data->buffer, current_x, current_y, 0x29ab87);
-// 		i++;
-// 	}
-// }
-
-// void	field_of_view(t_data *data, t_player *player)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	double j = 0;
-// 	while (i < FOV)
-// 	{
-	// 		draw_direction(data, player->x + PLAYER_SIZE / 2,
-// 			player->y + PLAYER_SIZE / 2, player->angle + j);
-// 		i++;
-// 		j += 0.01;
-// 	}
-// }
+* * *  casting rays with the normal way * * *
 */
+void	draw_direction(t_data *data, int x, int y, double angle)
+{
+	double	current_x;
+	double	current_y;
+	int		i;
+	int		len;
+
+	len = WIN_WIDTH;
+	i = 0;
+	while (i < len)
+	{
+		current_x = x + cos(angle) * i;
+		current_y = y + sin(angle) * i;
+		if (is_wall(data->map, current_x, current_y))
+			break ;
+		put_pixel_to_buffer(data->buffer, current_x, current_y, 0x29ab87);
+		i++;
+	}
+}
+
+/*
+* * * Bresenham Algo * * *
 
 void	init_cast(t_cast *cast, int x1, int y1)
 {
@@ -107,7 +96,7 @@ void	cast_ray(t_data *data, t_cast *cast, int x1, int y1)
 	}
 }
 
-void draw_direction(t_data *data, int x, int y, double angle)
+void	draw_direction(t_data *data, int x, int y, double angle)
 {
 	double	current_x;
 	double	current_y;
@@ -130,8 +119,9 @@ void draw_direction(t_data *data, int x, int y, double angle)
 		i++;
 	}
 }
+*/
 
-void field_of_view(t_data *data, t_player *player)
+void	field_of_view(t_data *data, t_player *player)
 {
 	double	angle_step;
 	double	start_angle;
@@ -145,8 +135,8 @@ void field_of_view(t_data *data, t_player *player)
 	while (i < NUM_RAYS)
 	{
 		ray_angle = start_angle + (i * angle_step);
-		draw_direction(data, player->x + PLAYER_SIZE / 2,
-					   player->y + PLAYER_SIZE / 2, ray_angle);
+		draw_direction(data, player->x + PLAYER_SIZE / 2, player->y
+			+ PLAYER_SIZE / 2, ray_angle);
 		i++;
 	}
 }
