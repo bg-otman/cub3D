@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/03 16:02:32 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/03 19:23:22 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@
 # define WHITE_SPACES " \t\n\v\f\r"
 # define WIN_WIDTH 1500
 # define WIN_HEIGHT 800
-# define PLAYER_SIZE 15
 # define TILE_SIZE 30
-# define MINIMAP_SCALE 0.3
+# define PLAYER_SIZE TILE_SIZE / 2
+# define MINIMAP_SCALE 0.4
 # define MM_TILE_SIZE (TILE_SIZE * MINIMAP_SCALE)
 # define MM_OFFSET_X 20
 # define MM_OFFSET_Y 20
@@ -125,7 +125,7 @@ void	move_player(int key, t_data *data);
 bool	is_wall(char **map, int x, int y);
 void	player_rotation(int key, t_data *data);
 void	field_of_view(t_data *data, t_player *player);
-void	cieling_and_floor(t_data *data);
+void	ceiling_and_floor(t_data *data);
 // utils
 void	put_error(char	*msg, t_data *data, bool sys_error);
 void	init_buffer(t_data *data);
@@ -140,6 +140,7 @@ bool	ft_isspace(char c);
 bool	is_valid_key(int key);
 int		skip_spacess(const char *str);
 int		clean_exit(t_data *data);
+unsigned int	get_rgb_color(int red, int green, int blue);
 // parsing
 void	read_map(const char *map_path, int offset, t_data *data);
 void	get_map_data(const char *map_path, t_data *data);

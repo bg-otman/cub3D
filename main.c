@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:49 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/03 16:03:27 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/03 21:15:22 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	key_press(int key, t_data *data)
 void	draw(t_data *data)
 {
 	clear_buffer_img(data->buffer, 0x000000);
-	cieling_and_floor(data);
-	field_of_view(data, data->player);
+	ceiling_and_floor(data);
+	// field_of_view(data, data->player);
 	draw_minimap(data->map, data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->buffer->img_ptr,
 		0, 0);

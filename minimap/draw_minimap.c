@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:52:22 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/03 13:58:03 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/03 21:13:32 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	draw_block(t_data *data, int x, int y, int color)
 	int	start_x;
 
 	start_x = x;
-	height = MM_OFFSET_Y + y + TILE_SIZE * MINIMAP_SCALE;
-	width = MM_OFFSET_X + x + TILE_SIZE * MINIMAP_SCALE;
+	height = y + MM_TILE_SIZE;
+	width = x + MM_TILE_SIZE;
 	while (y < height)
 	{
 		x = start_x;
@@ -51,7 +51,7 @@ void	draw_direction(t_data *data, int x, int y, double angle)
 	}
 }
 
-void	draw_player_minimap(t_data *data, int center_x, int center_y,
+void	draw_player(t_data *data, double center_x, double center_y,
 		int radius)
 {
 	int (x), (y), (dx), (dy);
@@ -69,6 +69,19 @@ void	draw_player_minimap(t_data *data, int center_x, int center_y,
 		}
 		y++;
 	}
+}
+
+void display_player(t_data *data)
+{
+    double	x;
+	double	y;
+
+    x = MM_OFFSET_X + (data->player->x * MINIMAP_SCALE)
+		- ((PLAYER_SIZE * MINIMAP_SCALE) / 2) + MM_TILE_SIZE / 2;
+    y = MM_OFFSET_Y + (data->player->y * MINIMAP_SCALE)
+		- ((PLAYER_SIZE * MINIMAP_SCALE) / 2) + MM_TILE_SIZE / 2;
+    draw_player(data, x, y, (PLAYER_SIZE * MINIMAP_SCALE));
+    draw_direction(data, x, y, data->player->angle);
 }
 
 void	draw_minimap(char **map, t_data *data)
@@ -90,11 +103,5 @@ void	draw_minimap(char **map, t_data *data)
 		}
 		i++;
 	}
-	draw_player_minimap(data, MM_OFFSET_X + (data->player->x * MINIMAP_SCALE)
-		- (PLAYER_SIZE * MINIMAP_SCALE) / 2, MM_OFFSET_Y + (data->player->y
-			* MINIMAP_SCALE) - (PLAYER_SIZE * MINIMAP_SCALE) / 2,
-		(PLAYER_SIZE * MINIMAP_SCALE));
-	draw_direction(data, MM_OFFSET_X + (data->player->x * MINIMAP_SCALE)
-		- (PLAYER_SIZE * MINIMAP_SCALE) / 2, MM_OFFSET_Y + (data->player->y
-			* MINIMAP_SCALE) - (PLAYER_SIZE * MINIMAP_SCALE) / 2, data->player->angle);
+	display_player(data);
 }
