@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:08:24 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/01 14:20:28 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/03 13:58:34 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void	get_player_pos(char **map, double	*x, double	*y, char *player_dir)
 			if (map[pos_y][pos_x] == 'N' || map[pos_y][pos_x] == 'W'
 				|| map[pos_y][pos_x] == 'S' || map[pos_y][pos_x] == 'E')
 			{
-				*x = MINIMAP_OFFSET_X + pos_x * TILE_SIZE;
-				*y = MINIMAP_OFFSET_Y + pos_y * TILE_SIZE;
+				*x = MM_OFFSET_X + pos_x * TILE_SIZE;
+				*y = MM_OFFSET_Y + pos_y * TILE_SIZE;
 				*player_dir = map[pos_y][pos_x];
 				break ;
 			}

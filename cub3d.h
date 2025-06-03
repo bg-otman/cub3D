@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/01 17:35:11 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/03 16:02:32 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@
 # include <string.h>
 # include <stdbool.h>
 # include <math.h>
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846
+# endif
+# ifndef M_PI_2
+#  define M_PI_2 M_PI / 2
+# endif
 
 # define ESCAPE 65307
 # define RIGHT 65363
@@ -37,17 +43,15 @@
 # define WHITE_SPACES " \t\n\v\f\r"
 # define WIN_WIDTH 1500
 # define WIN_HEIGHT 800
-# define PLAYER_SIZE 20
+# define PLAYER_SIZE 15
 # define TILE_SIZE 30
-# define MINIMAP_OFFSET_X TILE_SIZE
-# define MINIMAP_OFFSET_Y TILE_SIZE
 # define MINIMAP_SCALE 0.3
 # define MM_TILE_SIZE (TILE_SIZE * MINIMAP_SCALE)
 # define MM_OFFSET_X 20
 # define MM_OFFSET_Y 20
 # define RAY_COLOR 0x29ab87
 # define MAX_RAY_LENGTH WIN_WIDTH
-# define NUM_RAYS 100
+# define NUM_RAYS 1500
 # define FOV (M_PI / 4)
 
 
@@ -115,8 +119,13 @@ typedef struct s_data
 	int			exit_status;
 } t_data;
 
-// main
+// src
 void	draw(t_data *data);
+void	move_player(int key, t_data *data);
+bool	is_wall(char **map, int x, int y);
+void	player_rotation(int key, t_data *data);
+void	field_of_view(t_data *data, t_player *player);
+void	cieling_and_floor(t_data *data);
 // utils
 void	put_error(char	*msg, t_data *data, bool sys_error);
 void	init_buffer(t_data *data);
@@ -138,11 +147,6 @@ void	check_walls(char **map, t_data *data);
 void	parse_map(t_data *data, char *av[]);
 void	map_len(int fd, t_data *data);
 // minimap
-void	draw_player(t_data *data, int center_x, int center_y, int radius);
 void	draw_minimap(char **map, t_data *data);
-void	player_rotation(int key, t_data *data);
-void	move_player(int key, t_data *data);
-void	field_of_view(t_data *data, t_player *player);
-bool	is_wall(char **map, int x, int y);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:10:15 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/01 17:34:13 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/03 13:44:02 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ bool	is_wall(char **map, int x, int y)
 	int	map_x;
 	int	map_y;
 
-	map_x = (x / TILE_SIZE) - 1;
-	map_y = (y / TILE_SIZE) - 1;
+	map_x = (x / TILE_SIZE);
+	map_y = (y / TILE_SIZE);
 	if (map_y < 0 || !map[map_y])
 		return (true);
 	if (map_x < 0 || map_x >= (int)ft_strlen(map[map_y]))
@@ -31,6 +31,7 @@ bool	is_wall(char **map, int x, int y)
 void	check_all_sides(t_player *player, char **map, double new_x,
 		double new_y)
 {
+	(void) map;
 	if (!is_wall(map, new_x, new_y) && !is_wall(map, new_x + PLAYER_SIZE - 1,
 			new_y) && !is_wall(map, new_x, new_y + PLAYER_SIZE - 1)
 		&& !is_wall(map, new_x + PLAYER_SIZE - 1, new_y + PLAYER_SIZE - 1))
