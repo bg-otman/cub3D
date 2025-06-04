@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/03 19:23:22 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/04 20:45:30 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,10 @@ typedef struct s_view
 
 typedef struct s_frame
 {
-	int	x;
-	int	y;
-	int	width;
-	int	hieght;
+	double	x;
+	double	y;
+	double	width;
+	double	hieght;
 } t_frame;
 
 typedef struct s_data
@@ -169,5 +169,7 @@ void	parse_map(t_data *data, char *av[]);
 void	map_len(int fd, t_data *data);
 // minimap
 void	draw_minimap(char **map, t_data *data);
+void	draw_frame(t_frame *frame, t_image *img, t_view  view);
+void	get_map_view_range(t_data *data);
 
 #endif
