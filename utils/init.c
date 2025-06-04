@@ -6,10 +6,47 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:11:43 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/21 17:12:58 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/30 10:08:04 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
+void	init_buffer(t_data *data)
+{
+	data->buffer = malloc(sizeof(t_image));
+	if (!data->buffer)
+		put_error("Error\nAllocation failed for buffer",
+			data, true);
+	data->buffer->img_ptr = mlx_new_image(data->mlx_ptr, WIN_WIDTH,
+			WIN_HEIGHT);
+	if (!data->buffer->img_ptr)
+		put_error("Error\nFailed to create buffer image!",
+			data, true);
+	data->buffer->pixel_data = mlx_get_data_addr(
+			data->buffer->img_ptr, &data->buffer->bpp,
+			&data->buffer->line_size, &data->buffer->endian);
+	data->buffer->width = WIN_WIDTH;
+	data->buffer->height = WIN_HEIGHT;
+}
 
+void	init_player(t_data *data)
+{
+	t_player *player;
+	
+	player = ft_malloc(sizeof(t_player));
+	data->player = player;
+	ft_bzero(player, sizeof(t_player));
+	player->move_speed = 3;
+	player->dx = cos(player->angle) * player->move_speed;
+	player->dy = sin(player->angle) * player->move_speed;
+	get_player_pos(data->map, &player->x, &player->y, &player->direction);
+	if (player->direction == 'N')
+		player->angle = -M_PI / 2;
+	else if (player->direction == 'S')
+		player->angle = M_PI / 2;
+	else if (player->direction == 'W')
+		player->angle = M_PI;
+	else
+		player->angle = 0;
+}

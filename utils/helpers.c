@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 18:24:23 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/23 19:06:53 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/24 20:12:16 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,12 @@ bool	is_line_empty(char *line)
 		line++;
 	}
 	return (true);
+}
+
+bool	is_valid_key(int key)
+{
+	if (key == LEFT || key == RIGHT || key == UP || key == DOWN
+		|| key == D_KEY || key == S_KEY || key == A_KEY || key == W_KEY)
+		return (true);
+	return (false);
 }

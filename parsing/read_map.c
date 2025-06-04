@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:07:45 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/23 20:25:45 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/25 16:18:53 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	check_is_surrounded(char *last, char *curr, char *next, t_data *data)
 		if ((is_valid_char(curr[i]) && (ft_isspace(last[i])
 					|| ft_isspace(next[i]))) || (is_valid_char(curr[i])
 				&& ft_isspace(curr[i + 1]))
-				|| (ft_isspace(curr[i]) && is_valid_char(curr[i + 1])))
+			|| (ft_isspace(curr[i]) && is_valid_char(curr[i + 1])))
 			put_error("Error\nInvalid map", data, false);
 		i++;
 	}

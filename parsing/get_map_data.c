@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_map_data.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asajed <asajed@student.42.fr>              +#+  +:+       +#+        */
+/*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 19:50:33 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/24 00:18:48 by asajed           ###   ########.fr       */
+/*   Updated: 2025/05/25 16:18:32 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	get_map_data(const char *map_path, t_data *data)
 		tmp = get_next_line(fd);
 	}
 	if (!(data->ea_path && data->no_path && data->so_path
-		&& data->we_path && data->floor && data->ceiling))
+			&& data->we_path && data->floor && data->ceiling))
 		put_error("Error\nInvalid map", data, false);
 	map_len(fd, data);
 	read_map(map_path, offset, data);

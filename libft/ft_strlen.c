@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:41:31 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/21 16:01:42 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/05/27 16:16:45 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
-	while (s && s[i])
+	if (!s)
+		return (0);
+	while (s[i])
 		i++;
 	return (i);
 }
