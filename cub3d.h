@@ -41,8 +41,8 @@
 # define D_KEY 100
 # define W_KEY 119
 # define WHITE_SPACES " \t\n\v\f\r"
-# define WIN_WIDTH 1500
-# define WIN_HEIGHT 800
+# define WIN_WIDTH 1000
+# define WIN_HEIGHT 500
 # define TILE_SIZE 30
 # define PLAYER_SIZE TILE_SIZE / 2
 # define MINIMAP_SCALE 0.4
@@ -53,6 +53,7 @@
 # define MAX_RAY_LENGTH WIN_WIDTH
 # define NUM_RAYS 1500
 # define FOV (M_PI / 4)
+# define MM_VIEW_RANGE 5
 
 
 typedef struct s_image
@@ -99,6 +100,23 @@ typedef struct s_player
 	char	direction;
 } t_player;
 
+typedef struct s_view
+{
+	int	start_row;
+	int	end_row;
+	int	start_col;
+	int	end_col;
+} t_view;
+
+
+typedef struct s_frame
+{
+	int	x;
+	int	y;
+	int	width;
+	int	hieght;
+} t_frame;
+
 typedef struct s_data
 {
 	char		**map;
@@ -114,6 +132,8 @@ typedef struct s_data
 	t_color		*ceiling;
 	t_cast		*cast;
 	t_player	*player;
+	t_view		view;
+	t_frame		frame;
 	int			map_height;
 	int			map_width;
 	int			exit_status;
