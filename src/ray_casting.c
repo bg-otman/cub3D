@@ -6,17 +6,32 @@
 /*   By: asajed <asajed@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 12:28:17 by asajed            #+#    #+#             */
-/*   Updated: 2025/06/04 23:20:22 by asajed           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:00:32 by asajed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
+void	my_put_pixel_to_buffer(t_image *img, double x, double y, int color)
+{
+	char	*dst;
+
+	if (color == (int)0xFF000000)
+		return ;
+	x = (int)round(x);
+	y = (int)round(y);
+	if (x >= 0 && y >= 0 && x < img->width && y < img->height)
+	{
+		dst = img->pixel_data + ((int)y * img->line_size + (int)x * (img->bpp / 8));
+		*(unsigned int *)dst = color;
+	}
+}
+
 void	draw_strip(t_data *data, double len, int x)
 {
 	double	strip;
-	int		first;
-	int		last;
+	double	first;
+	double	last;
 	int		i;
 
 	i = 0;
@@ -27,8 +42,11 @@ void	draw_strip(t_data *data, double len, int x)
 	last = (WIN_HEIGHT / 2) + (strip / 2);
 	if (last > WIN_HEIGHT)
 		last = WIN_HEIGHT;
-	while (first++ < last)
-		put_pixel_to_buffer(data->buffer, x, first, 0xFF0000);
+	while (first <= last)
+	{
+		my_put_pixel_to_buffer(data->buffer, x, first, 0xFF0000);
+		first++;
+	}
 }
 
 int	my_bool(bool condition, int yes, int no)
@@ -38,46 +56,44 @@ int	my_bool(bool condition, int yes, int no)
 	return (no);
 }
 
-void ray_casting(t_data *data, double angle, int column_x)
+void	implement_dda(t_dda *ray, t_data *data, double angle)
 {
-	double	step_x;
-	double	step_y;
-	double	side_dist_x;
-	double	side_dist_y;
-	int		map_x;
-	int		map_y;
-	int		side;
-	int		wall_dist;
-
-	map_x = (int)floor(data->player->x);
-	map_y = (int)floor(data->player->y);
-	step_x = my_bool((cos(angle) < 0), -1, 1);
-	step_y = my_bool((sin(angle) < 0), -1, 1);
-	side_dist_x = (data->player->x - map_x) * fabs(1.0 / cos(angle));
-	if (step_x > 0)
-		side_dist_x = ((map_x + 1.0) - data->player->x) * fabs(1.0 / cos(angle));
-	side_dist_y = (data->player->y - map_y) * fabs(1.0 / sin(angle));
-	if (step_y > 0)
-		side_dist_y = ((map_y + 1.0) - data->player->y) * fabs(1.0 / sin(angle));
-	side = 0;
-	while (!is_wall(data->map, map_x, map_y))
+	while (!is_wall(data->map, ray->map_x, ray->map_y))
 	{
-		if (side_dist_x < side_dist_y)
+		if (ray->side_dist_x < ray->side_dist_y)
 		{
-			side_dist_x += fabs(1.0 / cos(angle));
-			map_x += (int)step_x;
-			side = 0;
+			ray->side_dist_x += fabs(1.0 / cos(angle));
+			ray->map_x += (int)ray->step_x;
+			ray->side = 0;
 		}
 		else
 		{
-			side_dist_y += fabs(1.0 / sin(angle));
-			map_y += (int)step_y;
-			side = 1;
+			ray->side_dist_y += fabs(1.0 / sin(angle));
+			ray->map_y += (int)ray->step_y;
+			ray->side = 1;
 		}
 	}
-	if (side == 0)
-		wall_dist = (int)((map_x - data->player->x + (1 - step_x) / 2) / cos(angle));
+}
+
+void ray_casting(t_data *data, double angle, int column_x)
+{
+	t_dda	ray;
+
+	ray.map_x = (int)floor(data->player->x);
+	ray.map_y = (int)floor(data->player->y);
+	ray.step_x = my_bool((cos(angle) < 0), -1, 1);
+	ray.step_y = my_bool((sin(angle) < 0), -1, 1);
+	ray.side_dist_x = (data->player->x - ray.map_x) * fabs(1.0 / cos(angle));
+	if (ray.step_x > 0)
+		ray.side_dist_x = ((ray.map_x + 1.0) - data->player->x) * fabs(1.0 / cos(angle));
+	ray.side_dist_y = (data->player->y - ray.map_y) * fabs(1.0 / sin(angle));
+	if (ray.step_y > 0)
+		ray.side_dist_y = ((ray.map_y + 1.0) - data->player->y) * fabs(1.0 / sin(angle));
+	ray.side = 0;
+	implement_dda(&ray, data, angle);
+	if (ray.side == 0)
+		ray.wall_dist = (double)((ray.map_x - data->player->x + (1 - ray.step_x) / 2) / cos(angle));
 	else
-		wall_dist = (int)((map_y - data->player->y + (1 - step_y) / 2) / sin(angle));
-	draw_strip(data, wall_dist, column_x);
+		ray.wall_dist = (double)((ray.map_y - data->player->y + (1 - ray.step_y) / 2) / sin(angle));
+	draw_strip(data, ray.wall_dist, column_x);
 }

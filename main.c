@@ -14,6 +14,12 @@
 
 int	key_press(int key, t_data *data)
 {
+	mlx_destroy_image(data->mlx_ptr, data->buffer->img_ptr);
+	data->buffer->img_ptr = mlx_new_image(data->mlx_ptr, WIN_WIDTH,
+			WIN_HEIGHT);
+	data->buffer->pixel_data = mlx_get_data_addr(
+			data->buffer->img_ptr, &data->buffer->bpp,
+			&data->buffer->line_size, &data->buffer->endian);
 	if (key == ESCAPE)
 		clean_exit(data);
 	if (is_valid_key(key))

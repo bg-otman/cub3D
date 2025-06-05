@@ -32,9 +32,9 @@ void	check_all_sides(t_player *player, char **map, double new_x,
 		double new_y)
 {
 	(void) map;
-	if (!is_wall(map, new_x, new_y) && !is_wall(map, new_x + PLAYER_SIZE - 1,
-			new_y) && !is_wall(map, new_x, new_y + PLAYER_SIZE - 1)
-		&& !is_wall(map, new_x + PLAYER_SIZE - 1, new_y + PLAYER_SIZE - 1))
+	// if (!is_wall(map, new_x, new_y) && !is_wall(map, new_x + PLAYER_SIZE - 1,
+	// 		new_y) && !is_wall(map, new_x, new_y + PLAYER_SIZE - 1)
+	// 	&& !is_wall(map, new_x + PLAYER_SIZE - 1, new_y + PLAYER_SIZE - 1))
 	{
 		player->x = new_x;
 		player->y = new_y;

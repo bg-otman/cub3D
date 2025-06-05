@@ -41,8 +41,8 @@
 # define D_KEY 100
 # define W_KEY 119
 # define WHITE_SPACES " \t\n\v\f\r"
-# define WIN_WIDTH 1500
-# define WIN_HEIGHT 800
+# define WIN_WIDTH 800
+# define WIN_HEIGHT 600
 # define PLAYER_SIZE 15
 # define TILE_SIZE 30
 # define MINIMAP_SCALE 0.3
@@ -53,6 +53,18 @@
 # define MAX_RAY_LENGTH WIN_WIDTH
 # define NUM_RAYS 1500
 # define FOV (M_PI / 4)
+
+typedef struct s_dda
+{
+	double	step_x;
+	double	step_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	int		map_x;
+	int		map_y;
+	int		side;
+	double	wall_dist;
+}				t_dda;
 
 
 typedef struct s_image

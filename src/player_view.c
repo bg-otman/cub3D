@@ -6,7 +6,7 @@
 /*   By: asajed <asajed@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 15:43:09 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/03 17:58:03 by asajed           ###   ########.fr       */
+/*   Updated: 2025/06/05 14:15:35 by asajed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ void	cieling_and_floor(t_data *data)
 		x = 0;
 		while (x < WIN_WIDTH)
 		{
-			put_pixel_to_buffer(data->buffer, x, y, 0x90e0ef);
+			put_pixel_to_buffer(data->buffer, x, y, 0x00008B);
 			x++;
 		}
 		y++;
@@ -200,7 +200,7 @@ void	cieling_and_floor(t_data *data)
 		x = 0;
 		while (x < WIN_WIDTH)
 		{
-			put_pixel_to_buffer(data->buffer, x, y, 0xccc5b9);
+			put_pixel_to_buffer(data->buffer, x, y, 0xC4C4C4);
 			x++;
 		}
 		y++;
