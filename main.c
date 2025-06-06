@@ -12,20 +12,25 @@
 
 #include "cub3d.h"
 
+
 int	key_press(int key, t_data *data)
 {
 	if (key == ESCAPE)
 		clean_exit(data);
 	if (is_valid_key(key))
 		move_player(key, data);
-	draw(data);
+	if (key == ENTER && !data->is_shooting)
+		data->is_shooting = true;
 	return (1);
 }
 
-void	draw_weapon(t_image *buffer, t_image **player_img)
+void	shoot(t_image *buffer, t_image **player_img, int shoot_frame)
 {
-	put_img_to_buffer(buffer, player_img[0],
-		WIN_WIDTH / 1.8, WIN_HEIGHT - player_img[0]->height - 1);
+	int	sprite_index;
+
+	sprite_index = (shoot_frame / 10) % GUN_NUM_SPRITES;
+	put_img_to_buffer(buffer, player_img[sprite_index],
+		WIN_WIDTH / 1.8, WIN_HEIGHT - player_img[sprite_index]->height - 1);
 }
 
 void	draw(t_data *data)
@@ -34,9 +39,25 @@ void	draw(t_data *data)
 	ceiling_and_floor(data);
 	// field_of_view(data, data->player);
 	draw_minimap(data->map, data);
-	draw_weapon(data->buffer, data->player_img);
+	shoot(data->buffer, data->player_img, data->shoot_frame);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->buffer->img_ptr,
 		0, 0);
+}
+
+int	update_frame(t_data *data)
+{
+	if (data->is_shooting)
+    {
+        if (data->shoot_frame < GUN_NUM_SPRITES * 10)
+			data->shoot_frame++;
+        else
+        {
+            data->is_shooting = false;
+            data->shoot_frame = 0;
+        }
+	}
+	draw(data);
+	return (0);
 }
 
 int	main(int ac, char *av[])
@@ -52,9 +73,9 @@ int	main(int ac, char *av[])
 	init_buffer(&data);
 	init_player(&data);
 	load_textures(&data);
-	draw(&data);
 	mlx_hook(data.win_ptr, 2, 1L << 0, key_press, (t_data *)&data);
 	mlx_hook(data.win_ptr, 17, 0, clean_exit, (t_data *)&data);
+	mlx_loop_hook(data.mlx_ptr, update_frame, (t_data *)&data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

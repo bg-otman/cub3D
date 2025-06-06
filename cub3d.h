@@ -52,7 +52,7 @@
 # define MM_OFFSET_Y 20
 # define RAY_COLOR 0x29ab87
 # define MAX_RAY_LENGTH WIN_WIDTH
-# define NUM_RAYS 1500
+# define NUM_RAYS 1000
 # define FOV (M_PI / 4)
 # define MM_VIEW_RANGE 5
 # define GUN_NUM_SPRITES 5
@@ -125,6 +125,8 @@ typedef struct s_data
 	int			map_height;
 	int			map_width;
 	int			exit_status;
+	int			shoot_frame;
+	bool		is_shooting;
 } t_data;
 
 // src
