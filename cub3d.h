@@ -36,6 +36,7 @@
 # define LEFT 65361
 # define DOWN 65364
 # define UP 65362
+# define ENTER 65293
 # define A_KEY 97
 # define S_KEY 115
 # define D_KEY 100
@@ -54,6 +55,7 @@
 # define NUM_RAYS 1500
 # define FOV (M_PI / 4)
 # define MM_VIEW_RANGE 5
+# define GUN_NUM_SPRITES 5
 
 
 typedef struct s_image
@@ -72,20 +74,6 @@ typedef struct s_color {
 	int	g;
 	int	b;
 } t_color;
-
-typedef struct s_cast
-{
-	int		x0;
-	int		y0;
-	int		x1;
-	int		y1;
-	int		dx;
-	int		dy;
-	int		sx;
-	int		sy;
-	int		tmp;
-	int		err;
-} t_cast;
 
 typedef struct s_player
 {
@@ -128,9 +116,9 @@ typedef struct s_data
 	void		*win_ptr;
 	t_image		*img_wall;
 	t_image		*buffer;
+	t_image		**player_img;
 	t_color		*floor;
 	t_color		*ceiling;
-	t_cast		*cast;
 	t_player	*player;
 	t_view		view;
 	t_frame		frame;
@@ -153,6 +141,8 @@ void	put_pixel_to_buffer(t_image *img, int x, int y, int color);
 void	get_player_pos(char **map, double *x, double *y, char *player_dir);
 void	clear_buffer_img(t_image *buffer, int color);
 void	init_player(t_data *data);
+void	load_textures(t_data *data);
+void	put_img_to_buffer(t_image *buffer_img, t_image *img, int x, int y);
 bool	check_textures(char *line);
 bool	is_line_empty(char *line);
 bool	is_valid_char(char c);

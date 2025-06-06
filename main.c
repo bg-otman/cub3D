@@ -22,12 +22,19 @@ int	key_press(int key, t_data *data)
 	return (1);
 }
 
+void	draw_weapon(t_image *buffer, t_image **player_img)
+{
+	put_img_to_buffer(buffer, player_img[0],
+		WIN_WIDTH / 1.8, WIN_HEIGHT - player_img[0]->height - 1);
+}
+
 void	draw(t_data *data)
 {
 	clear_buffer_img(data->buffer, 0x000000);
 	ceiling_and_floor(data);
 	// field_of_view(data, data->player);
 	draw_minimap(data->map, data);
+	draw_weapon(data->buffer, data->player_img);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->buffer->img_ptr,
 		0, 0);
 }
@@ -44,6 +51,7 @@ int	main(int ac, char *av[])
 	data.win_ptr = mlx_new_window(data.mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "Cub3D");
 	init_buffer(&data);
 	init_player(&data);
+	load_textures(&data);
 	draw(&data);
 	mlx_hook(data.win_ptr, 2, 1L << 0, key_press, (t_data *)&data);
 	mlx_hook(data.win_ptr, 17, 0, clean_exit, (t_data *)&data);

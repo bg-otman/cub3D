@@ -93,7 +93,6 @@ void	field_of_view(t_data *data, t_player *player)
 	double	ray_len;
 	int		i;
 
-	data->cast = ft_malloc(sizeof(t_cast));
 	angle_step = (FOV / NUM_RAYS);
 	start_angle = player->angle - (FOV / 2);
 	i = 0;

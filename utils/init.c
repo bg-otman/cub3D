@@ -50,3 +50,45 @@ void	init_player(t_data *data)
 	else
 		player->angle = 0;
 }
+
+bool	init_texture(t_data *data, t_image **img, char *file_path)
+{
+	*img = ft_malloc(sizeof(t_image));
+	(*img)->img_ptr = mlx_xpm_file_to_image(data->mlx_ptr, file_path,
+			&((*img)->width), &((*img)->height));
+	if (!(*img)->img_ptr)
+	{
+		put_error("Error\nFailed to load texture : ", data, true);
+		data->exit_status = EXIT_FAILURE;
+		return (false);
+	}
+	(*img)->pixel_data = mlx_get_data_addr((*img)->img_ptr, &(*img)->bpp,
+			&(*img)->line_size, &(*img)->endian);
+	return (true);
+}
+
+void	load_sprites(t_data *mlx, t_image **sprites, char *path, int sprite_num)
+{
+	int		i;
+	char	full_path[50];
+	char	*num;
+
+	i = 0;
+	while (i < sprite_num)
+	{
+		num = ft_itoa(i);
+		ft_strlcpy(full_path, path, sizeof(full_path));
+		ft_strlcat(full_path, num, sizeof(full_path));
+		ft_strlcat(full_path, ".xpm", sizeof(full_path));
+		init_texture(mlx, &(sprites[i]), full_path);
+		i++;
+	}
+}
+
+void	load_textures(t_data *data)
+{
+	// player sprites
+	data->player_img = ft_malloc(sizeof(t_image *) * GUN_NUM_SPRITES + 1);
+	data->player_img[GUN_NUM_SPRITES] = NULL;
+	load_sprites(data, data->player_img, "textures/gun", GUN_NUM_SPRITES);
+}
