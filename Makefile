@@ -2,7 +2,7 @@ PARSING = parsing/get_next_line/get_next_line.c parsing/get_next_line/get_next_l
 parsing/get_map_data.c parsing/read_map.c
 UTILS = utils/utils.c utils/init.c utils/helpers.c utils/put_pixels.c
 MINIMAP = minimap/draw_minimap.c minimap/minimap_frame.c
-SRCS +=  main.c src/move_player.c src/player_view.c $(PARSING) $(UTILS) $(MINIMAP)
+SRCS +=  main.c src/move_player.c src/ray_casting.c src/player_view.c $(PARSING) $(UTILS) $(MINIMAP)
 LIBFT = libft/libft.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g

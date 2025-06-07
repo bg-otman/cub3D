@@ -65,7 +65,8 @@ void	update_position(t_player *player, char **map, int key)
 		new_x += cos(player->angle - M_PI_2) * player->move_speed;
 		new_y += sin(player->angle - M_PI_2) * player->move_speed;
 	}
-	is_collision(player, map, new_x, new_y);
+	is_collision(player, map, new_x, player->y);
+	is_collision(player, map, player->x, new_y);
 }
 
 void	move_player(int key, t_data *data)

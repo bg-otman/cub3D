@@ -38,6 +38,7 @@ void	init_player(t_data *data)
 	data->player = player;
 	ft_bzero(player, sizeof(t_player));
 	player->move_speed = 3;
+	player->rotation_speed = 0.1;
 	player->dx = cos(player->angle) * player->move_speed;
 	player->dy = sin(player->angle) * player->move_speed;
 	get_player_pos(data->map, &player->x, &player->y, &player->direction);

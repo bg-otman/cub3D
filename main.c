@@ -12,7 +12,6 @@
 
 #include "cub3d.h"
 
-
 int	key_press(int key, t_data *data)
 {
 	if (key == ESCAPE)
@@ -37,7 +36,7 @@ void	draw(t_data *data)
 {
 	clear_buffer_img(data->buffer, 0x000000);
 	ceiling_and_floor(data);
-	// field_of_view(data, data->player);
+	field_of_view(data, data->player);
 	draw_minimap(data->map, data);
 	shoot(data->buffer, data->player_img, data->shoot_frame);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->buffer->img_ptr,
@@ -75,6 +74,7 @@ int	main(int ac, char *av[])
 	load_textures(&data);
 	mlx_hook(data.win_ptr, 2, 1L << 0, key_press, (t_data *)&data);
 	mlx_hook(data.win_ptr, 17, 0, clean_exit, (t_data *)&data);
+	mlx_hook(data.win_ptr, 6, 1L << 6, mouse_rotate, (t_data *) &data);
 	mlx_loop_hook(data.mlx_ptr, update_frame, (t_data *)&data);
 	mlx_loop(data.mlx_ptr);
 	return (0);

@@ -136,6 +136,7 @@ bool	is_wall(char **map, int x, int y);
 void	player_rotation(int key, t_data *data);
 void	field_of_view(t_data *data, t_player *player);
 void	ceiling_and_floor(t_data *data);
+int		mouse_rotate(int x, int y, t_data *data);
 // utils
 void	put_error(char	*msg, t_data *data, bool sys_error);
 void	init_buffer(t_data *data);
