@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asajed <asajed@student.42.fr>              +#+  +:+       +#+        */
+/*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/04 23:23:30 by asajed           ###   ########.fr       */
+/*   Updated: 2025/06/04 20:45:30 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,26 @@
 # define LEFT 65361
 # define DOWN 65364
 # define UP 65362
+# define ENTER 65293
 # define A_KEY 97
 # define S_KEY 115
 # define D_KEY 100
 # define W_KEY 119
 # define WHITE_SPACES " \t\n\v\f\r"
-# define WIN_WIDTH 800
-# define WIN_HEIGHT 600
-# define PLAYER_SIZE 15
+# define WIN_WIDTH 1000
+# define WIN_HEIGHT 500
 # define TILE_SIZE 30
-# define MINIMAP_SCALE 0.3
+# define PLAYER_SIZE TILE_SIZE / 2
+# define MINIMAP_SCALE 0.4
 # define MM_TILE_SIZE (TILE_SIZE * MINIMAP_SCALE)
 # define MM_OFFSET_X 20
 # define MM_OFFSET_Y 20
 # define RAY_COLOR 0x29ab87
 # define MAX_RAY_LENGTH WIN_WIDTH
-# define NUM_RAYS 1500
+# define NUM_RAYS WIN_WIDTH
 # define FOV (M_PI / 4)
+# define MM_VIEW_RANGE 5
+# define GUN_NUM_SPRITES 5
 
 typedef struct s_dda
 {
@@ -65,7 +68,6 @@ typedef struct s_dda
 	int		side;
 	double	wall_dist;
 }				t_dda;
-
 
 typedef struct s_image
 {
@@ -84,20 +86,6 @@ typedef struct s_color {
 	int	b;
 } t_color;
 
-typedef struct s_cast
-{
-	int		x0;
-	int		y0;
-	int		x1;
-	int		y1;
-	int		dx;
-	int		dy;
-	int		sx;
-	int		sy;
-	int		tmp;
-	int		err;
-} t_cast;
-
 typedef struct s_player
 {
 	double	x;
@@ -111,6 +99,23 @@ typedef struct s_player
 	char	direction;
 } t_player;
 
+typedef struct s_view
+{
+	int	start_row;
+	int	end_row;
+	int	start_col;
+	int	end_col;
+} t_view;
+
+
+typedef struct s_frame
+{
+	double	x;
+	double	y;
+	double	width;
+	double	hieght;
+} t_frame;
+
 typedef struct s_data
 {
 	char		**map;
@@ -122,13 +127,17 @@ typedef struct s_data
 	void		*win_ptr;
 	t_image		*img_wall;
 	t_image		*buffer;
+	t_image		**player_img;
 	t_color		*floor;
 	t_color		*ceiling;
-	t_cast		*cast;
 	t_player	*player;
+	t_view		view;
+	t_frame		frame;
 	int			map_height;
 	int			map_width;
 	int			exit_status;
+	int			shoot_frame;
+	bool		is_shooting;
 } t_data;
 
 // src
@@ -136,8 +145,9 @@ void	draw(t_data *data);
 void	move_player(int key, t_data *data);
 bool	is_wall(char **map, int x, int y);
 void	player_rotation(int key, t_data *data);
-void	field_of_view(t_data *data, t_player *player);
-void	cieling_and_floor(t_data *data);
+void	field_of_view(t_data *data);
+void	ceiling_and_floor(t_data *data);
+int		mouse_rotate(int x, int y, t_data *data);
 // utils
 void	put_error(char	*msg, t_data *data, bool sys_error);
 void	init_buffer(t_data *data);
@@ -145,6 +155,8 @@ void	put_pixel_to_buffer(t_image *img, int x, int y, int color);
 void	get_player_pos(char **map, double *x, double *y, char *player_dir);
 void	clear_buffer_img(t_image *buffer, int color);
 void	init_player(t_data *data);
+void	load_textures(t_data *data);
+void	put_img_to_buffer(t_image *buffer_img, t_image *img, int x, int y);
 bool	check_textures(char *line);
 bool	is_line_empty(char *line);
 bool	is_valid_char(char c);
@@ -152,6 +164,7 @@ bool	ft_isspace(char c);
 bool	is_valid_key(int key);
 int		skip_spacess(const char *str);
 int		clean_exit(t_data *data);
+unsigned int	get_rgb_color(int red, int green, int blue);
 // parsing
 void	read_map(const char *map_path, int offset, t_data *data);
 void	get_map_data(const char *map_path, t_data *data);
@@ -160,7 +173,7 @@ void	parse_map(t_data *data, char *av[]);
 void	map_len(int fd, t_data *data);
 // minimap
 void	draw_minimap(char **map, t_data *data);
-// ray casting
-void 	ray_casting(t_data *data, double angle, int column_x);
+void	draw_frame(t_frame *frame, t_image *img, t_view  view);
+void	get_map_view_range(t_data *data);
 
 #endif

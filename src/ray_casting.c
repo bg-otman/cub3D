@@ -1,40 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ray_casting.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: asajed <asajed@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 12:28:17 by asajed            #+#    #+#             */
-/*   Updated: 2025/06/05 15:00:32 by asajed           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../cub3d.h"
-
-void	my_put_pixel_to_buffer(t_image *img, double x, double y, int color)
-{
-	char	*dst;
-
-	if (color == (int)0xFF000000)
-		return ;
-	x = (int)round(x);
-	y = (int)round(y);
-	if (x >= 0 && y >= 0 && x < img->width && y < img->height)
-	{
-		dst = img->pixel_data + ((int)y * img->line_size + (int)x * (img->bpp / 8));
-		*(unsigned int *)dst = color;
-	}
-}
 
 void	draw_strip(t_data *data, double len, int x)
 {
 	double	strip;
 	double	first;
 	double	last;
-	int		i;
 
-	i = 0;
 	strip = (TILE_SIZE / len) * ((WIN_WIDTH / 2) / tan(FOV / 2));
 	first = (WIN_HEIGHT / 2) - (strip / 2);
 	if (first < 0)
@@ -44,7 +15,7 @@ void	draw_strip(t_data *data, double len, int x)
 		last = WIN_HEIGHT;
 	while (first <= last)
 	{
-		my_put_pixel_to_buffer(data->buffer, x, first, 0xFF0000);
+		put_pixel_to_buffer(data->buffer, x, first, 0x8B0000);
 		first++;
 	}
 }
@@ -58,17 +29,20 @@ int	my_bool(bool condition, int yes, int no)
 
 void	implement_dda(t_dda *ray, t_data *data, double angle)
 {
+	double (delta_dist_x), (delta_dist_y);
+	delta_dist_x = fabs(1.0 / cos(angle));
+	delta_dist_y = fabs(1.0 / sin(angle));
 	while (!is_wall(data->map, ray->map_x, ray->map_y))
 	{
 		if (ray->side_dist_x < ray->side_dist_y)
 		{
-			ray->side_dist_x += fabs(1.0 / cos(angle));
+			ray->side_dist_x += delta_dist_x;
 			ray->map_x += (int)ray->step_x;
 			ray->side = 0;
 		}
 		else
 		{
-			ray->side_dist_y += fabs(1.0 / sin(angle));
+			ray->side_dist_y += delta_dist_y;
 			ray->map_y += (int)ray->step_y;
 			ray->side = 1;
 		}
@@ -96,4 +70,16 @@ void ray_casting(t_data *data, double angle, int column_x)
 	else
 		ray.wall_dist = (double)((ray.map_y - data->player->y + (1 - ray.step_y) / 2) / sin(angle));
 	draw_strip(data, ray.wall_dist, column_x);
+}
+
+void	field_of_view(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < NUM_RAYS)
+	{
+		ray_casting(data, ((data->player->angle - (FOV / 2)) + (i * (FOV / NUM_RAYS))), i);
+		i++;
+	}
 }
