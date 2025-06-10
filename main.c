@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:49 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/04 19:06:48 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/10 15:07:41 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	draw(t_data *data)
 {
 	clear_buffer_img(data->buffer, 0x000000);
 	ceiling_and_floor(data);
-	field_of_view(data, data->player);
+	field_of_view(data);
 	draw_minimap(data->map, data);
 	shoot(data->buffer, data->player_img, data->shoot_frame);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->buffer->img_ptr,
@@ -68,7 +68,11 @@ int	main(int ac, char *av[])
 	ft_memset(&data, 0, sizeof(t_data));
 	parse_map(&data, av + 1);
 	data.mlx_ptr = mlx_init();
+	if (!data.mlx_ptr)
+		put_error("Error\nFailed to initialise mlx : ", &data, true);
 	data.win_ptr = mlx_new_window(data.mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "Cub3D");
+	if (!data.mlx_ptr)
+		put_error("Error\nFailed to open window : ", &data, true);
 	init_buffer(&data);
 	init_player(&data);
 	load_textures(&data);

@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:08:24 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/04 20:27:03 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/10 14:59:35 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,6 @@ void	put_error(char *msg, t_data *data, bool sys_error)
 	ft_putstr_fd("\n", 2);
 	data->exit_status = EXIT_FAILURE;
 	clean_exit(data);
-}
-
-int	clean_exit(t_data *data)
-{
-	if (!data)
-		(free_garbage(), exit(EXIT_FAILURE));
-	if (data->win_ptr)
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	//// here free ressources loaded by mlx's funs
-	if (data->buffer)
-	{
-		if (data->buffer->img_ptr)
-			mlx_destroy_image(data->mlx_ptr, data->buffer->img_ptr);
-		free(data->buffer);
-	}
-	/////
-	if (data->mlx_ptr)
-	{
-		mlx_destroy_display(data->mlx_ptr);
-		free(data->mlx_ptr);
-	}
-	free_garbage();
-	exit(data->exit_status);
 }
 
 bool	check_textures(char *line)

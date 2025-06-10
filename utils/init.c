@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:11:43 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/30 10:08:04 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/10 15:08:31 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_buffer(t_data *data)
 {
-	data->buffer = malloc(sizeof(t_image));
+	data->buffer = ft_malloc(sizeof(t_image));
 	if (!data->buffer)
 		put_error("Error\nAllocation failed for buffer",
 			data, true);
@@ -38,7 +38,7 @@ void	init_player(t_data *data)
 	data->player = player;
 	ft_bzero(player, sizeof(t_player));
 	player->move_speed = 3;
-	player->rotation_speed = 0.1;
+	player->rotation_speed = 0.09;
 	player->dx = cos(player->angle) * player->move_speed;
 	player->dy = sin(player->angle) * player->move_speed;
 	get_player_pos(data->map, &player->x, &player->y, &player->direction);
@@ -90,6 +90,6 @@ void	load_textures(t_data *data)
 {
 	// player sprites
 	data->player_img = ft_malloc(sizeof(t_image *) * GUN_NUM_SPRITES + 1);
-	data->player_img[GUN_NUM_SPRITES] = NULL;
+	data->player_img[GUN_NUM_SPRITES - 1] = NULL;
 	load_sprites(data, data->player_img, "textures/gun", GUN_NUM_SPRITES);
 }

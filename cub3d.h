@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/04 20:45:30 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/10 15:00:27 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,17 @@
 # define MM_VIEW_RANGE 5
 # define GUN_NUM_SPRITES 5
 
+typedef struct s_dda
+{
+	double	step_x;
+	double	step_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	int		map_x;
+	int		map_y;
+	int		side;
+	double	wall_dist;
+}				t_dda;
 
 typedef struct s_image
 {
@@ -134,7 +145,7 @@ void	draw(t_data *data);
 void	move_player(int key, t_data *data);
 bool	is_wall(char **map, int x, int y);
 void	player_rotation(int key, t_data *data);
-void	field_of_view(t_data *data, t_player *player);
+void	field_of_view(t_data *data);
 void	ceiling_and_floor(t_data *data);
 int		mouse_rotate(int x, int y, t_data *data);
 // utils
@@ -152,8 +163,9 @@ bool	is_valid_char(char c);
 bool	ft_isspace(char c);
 bool	is_valid_key(int key);
 int		skip_spacess(const char *str);
-int		clean_exit(t_data *data);
 unsigned int	get_rgb_color(int red, int green, int blue);
+// clean_exit
+int		clean_exit(t_data *data);
 // parsing
 void	read_map(const char *map_path, int offset, t_data *data);
 void	get_map_data(const char *map_path, t_data *data);
