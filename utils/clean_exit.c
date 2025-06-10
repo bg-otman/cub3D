@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:59:44 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/10 15:04:21 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/10 16:57:31 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	free_sprites(t_data *data, t_image **sprites, int sprites_num)
 	int	i;
 
 	i = 0;
+	if (!sprites)
+		return ;
 	while (i < sprites_num)
 	{
 		if (sprites[i])

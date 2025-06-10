@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/10 15:00:27 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/10 18:07:15 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@
 # define MM_OFFSET_X 20
 # define MM_OFFSET_Y 20
 # define RAY_COLOR 0x29ab87
-# define MAX_RAY_LENGTH WIN_WIDTH
 # define NUM_RAYS 1000
 # define FOV (M_PI / 4)
 # define MM_VIEW_RANGE 5
@@ -107,7 +106,6 @@ typedef struct s_view
 	int	end_col;
 } t_view;
 
-
 typedef struct s_frame
 {
 	double	x;
@@ -115,6 +113,17 @@ typedef struct s_frame
 	double	width;
 	double	hieght;
 } t_frame;
+
+typedef struct s_door
+{
+	double	progress;
+	int		map_x;
+	int		map_y;
+	bool	is_opening;
+	bool	is_closing;
+	bool	is_moving;
+}	t_door;
+
 
 typedef struct s_data
 {
@@ -131,6 +140,7 @@ typedef struct s_data
 	t_color		*floor;
 	t_color		*ceiling;
 	t_player	*player;
+	t_door		*door;
 	t_view		view;
 	t_frame		frame;
 	int			map_height;

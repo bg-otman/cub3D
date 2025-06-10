@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:52:22 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/04 20:45:41 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/10 18:02:39 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ void	draw_minimap(char **map, t_data *data)
 			draw_block(data, x - 1, y - 1, 0x000000);
             if (map[i][j] == '1')
                 draw_block(data, x, y, 0x0047ab);
+			else if (map[i][j] == 'D')
+				draw_block(data, x, y, 0xf7a829);
             else if (!ft_isspace(map[i][j]))
                 draw_block(data, x, y, 0xFFFFFF);
             j++;
