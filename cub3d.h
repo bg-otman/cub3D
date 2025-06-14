@@ -56,6 +56,8 @@
 # define FOV (M_PI / 4)
 # define MM_VIEW_RANGE 5
 # define GUN_NUM_SPRITES 5
+# define TEXTURE_WIDTH 64
+# define TEXTURE_HEIGHT 64
 
 typedef struct s_dda
 {
@@ -63,10 +65,12 @@ typedef struct s_dda
 	double	step_y;
 	double	side_dist_x;
 	double	side_dist_y;
-	int		map_x;
-	int		map_y;
+	double	map_x;
+	double	map_y;
 	int		side;
 	double	wall_dist;
+	double	delta_dist_x;
+	double	delta_dist_y;
 }				t_dda;
 
 typedef struct s_image
@@ -126,6 +130,7 @@ typedef struct s_data
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_image		*img_wall;
+	t_image		*texture;
 	t_image		*buffer;
 	t_image		**player_img;
 	t_color		*floor;
@@ -175,5 +180,6 @@ void	map_len(int fd, t_data *data);
 void	draw_minimap(char **map, t_data *data);
 void	draw_frame(t_frame *frame, t_image *img, t_view  view);
 void	get_map_view_range(t_data *data);
+unsigned int	get_pixel_color(t_image *img, int x, int y);
 
 #endif

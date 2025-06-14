@@ -92,4 +92,5 @@ void	load_textures(t_data *data)
 	data->player_img = ft_malloc(sizeof(t_image *) * GUN_NUM_SPRITES + 1);
 	data->player_img[GUN_NUM_SPRITES] = NULL;
 	load_sprites(data, data->player_img, "textures/gun", GUN_NUM_SPRITES);
+	init_texture(data, &data->texture, "textures/wolfenstein/eagle.xpm");
 }
