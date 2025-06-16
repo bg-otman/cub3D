@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:49 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/10 15:07:41 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/16 15:41:40 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	key_press(int key, t_data *data)
 		move_player(key, data);
 	if (key == ENTER && !data->is_shooting)
 		data->is_shooting = true;
+	if (key == SPACE)
+		open_door(data, data->player->x, data->player->y);
 	return (1);
 }
 
@@ -35,7 +37,6 @@ void	shoot(t_image *buffer, t_image **player_img, int shoot_frame)
 void	draw(t_data *data)
 {
 	clear_buffer_img(data->buffer, 0x000000);
-	ceiling_and_floor(data);
 	field_of_view(data);
 	draw_minimap(data->map, data);
 	shoot(data->buffer, data->player_img, data->shoot_frame);
@@ -55,6 +56,7 @@ int	update_frame(t_data *data)
             data->shoot_frame = 0;
         }
 	}
+	update_doors(data, data->doors);
 	draw(data);
 	return (0);
 }
@@ -75,6 +77,7 @@ int	main(int ac, char *av[])
 		put_error("Error\nFailed to open window : ", &data, true);
 	init_buffer(&data);
 	init_player(&data);
+	init_doors(&data);
 	load_textures(&data);
 	mlx_hook(data.win_ptr, 2, 1L << 0, key_press, (t_data *)&data);
 	mlx_hook(data.win_ptr, 17, 0, clean_exit, (t_data *)&data);

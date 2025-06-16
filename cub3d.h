@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/10 18:07:15 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/16 17:24:20 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define DOWN 65364
 # define UP 65362
 # define ENTER 65293
+# define SPACE 32
 # define A_KEY 97
 # define S_KEY 115
 # define D_KEY 100
@@ -51,7 +52,7 @@
 # define MM_OFFSET_X 20
 # define MM_OFFSET_Y 20
 # define RAY_COLOR 0x29ab87
-# define NUM_RAYS 1000
+# define NUM_RAYS WIN_WIDTH
 # define FOV (M_PI / 4)
 # define MM_VIEW_RANGE 5
 # define GUN_NUM_SPRITES 5
@@ -124,7 +125,6 @@ typedef struct s_door
 	bool	is_moving;
 }	t_door;
 
-
 typedef struct s_data
 {
 	char		**map;
@@ -137,42 +137,51 @@ typedef struct s_data
 	t_image		*img_wall;
 	t_image		*buffer;
 	t_image		**player_img;
+	t_door		**doors;
 	t_color		*floor;
 	t_color		*ceiling;
 	t_player	*player;
-	t_door		*door;
 	t_view		view;
 	t_frame		frame;
 	int			map_height;
 	int			map_width;
 	int			exit_status;
 	int			shoot_frame;
+	int			doors_count;
 	bool		is_shooting;
 } t_data;
 
 // src
 void	draw(t_data *data);
 void	move_player(int key, t_data *data);
-bool	is_wall(char **map, int x, int y);
+void	draw_sky(t_data *data, double max_to_fill, int x);
+void	draw_floor(t_data *data, double floor_start, int x);
+bool	is_wall(t_data *data, int x, int y);
 void	player_rotation(int key, t_data *data);
 void	field_of_view(t_data *data);
-void	ceiling_and_floor(t_data *data);
 int		mouse_rotate(int x, int y, t_data *data);
 // utils
-void	put_error(char	*msg, t_data *data, bool sys_error);
-void	init_buffer(t_data *data);
-void	put_pixel_to_buffer(t_image *img, int x, int y, int color);
-void	get_player_pos(char **map, double *x, double *y, char *player_dir);
-void	clear_buffer_img(t_image *buffer, int color);
-void	init_player(t_data *data);
-void	load_textures(t_data *data);
 void	put_img_to_buffer(t_image *buffer_img, t_image *img, int x, int y);
+void	get_player_pos(char **map, double *x, double *y, char *player_dir);
+void	put_pixel_to_buffer(t_image *img, int x, int y, int color);
+void	put_error(char	*msg, t_data *data, bool sys_error);
+void	clear_buffer_img(t_image *buffer, int color);
+void	load_textures(t_data *data);
+void	init_buffer(t_data *data);
+void	init_player(t_data *data);
+void	init_doors(t_data *data);
 bool	check_textures(char *line);
 bool	is_line_empty(char *line);
 bool	is_valid_char(char c);
 bool	ft_isspace(char c);
 bool	is_valid_key(int key);
 int		skip_spacess(const char *str);
+bool	is_door(t_data *data, int x, int y);
+bool	is_door_close(t_data *data, int map_y, int map_x);
+void	update_doors(t_data *data, t_door **doors);
+void	open_door(t_data *data, int plyr_x, int plyr_y);
+t_door	*get_door_at(t_data *data, int map_x, int map_y);
+bool	door_progress(t_data *data, t_dda ray);
 unsigned int	get_rgb_color(int red, int green, int blue);
 // clean_exit
 int		clean_exit(t_data *data);

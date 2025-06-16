@@ -6,13 +6,13 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:53:57 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/10 14:53:57 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/16 19:00:01 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	draw_strip(t_data *data, double len, int x)
+void	draw_strip(t_data *data, double len, int x, int color)
 {
 	double	strip;
 	double	first;
@@ -25,9 +25,13 @@ void	draw_strip(t_data *data, double len, int x)
 	last = (WIN_HEIGHT / 2) + (strip / 2);
 	if (last > WIN_HEIGHT)
 		last = WIN_HEIGHT;
+	draw_sky(data, first, x);
+	draw_floor(data, last, x);
+	if (color == -1)
+		return ;
 	while (first <= last)
 	{
-		put_pixel_to_buffer(data->buffer, x, first, 0xFFFFFF);
+		put_pixel_to_buffer(data->buffer, x, first, color);
 		first++;
 	}
 }
@@ -44,8 +48,11 @@ void	implement_dda(t_dda *ray, t_data *data, double angle)
 	double (delta_dist_x), (delta_dist_y);
 	delta_dist_x = fabs(1.0 / cos(angle));
 	delta_dist_y = fabs(1.0 / sin(angle));
-	while (!is_wall(data->map, ray->map_x, ray->map_y))
+	while (!is_wall(data, ray->map_x, ray->map_y) || is_door(data, ray->map_x, ray->map_y))
 	{
+		if (is_door(data, ray->map_x, ray->map_y)
+			&& !door_progress(data, *ray))
+			return ;
 		if (ray->side_dist_x < ray->side_dist_y)
 		{
 			ray->side_dist_x += delta_dist_x;
@@ -81,7 +88,21 @@ void ray_casting(t_data *data, double angle, int column_x)
 		ray.wall_dist = (double)((ray.map_x - data->player->x + (1 - ray.step_x) / 2) / cos(angle));
 	else
 		ray.wall_dist = (double)((ray.map_y - data->player->y + (1 - ray.step_y) / 2) / sin(angle));
-	draw_strip(data, ray.wall_dist, column_x);
+	
+	// handle door and wall
+	t_door *door = get_door_at(data, ray.map_x / TILE_SIZE, ray.map_y / TILE_SIZE);
+	if (door)
+	{
+		if (door_progress(data, ray) || door->progress == 1.00)
+		{
+			draw_strip(data, ray.wall_dist, column_x, 0xFFFFFF);
+			return ;
+		}
+		draw_strip(data, ray.wall_dist, column_x, 0xFF0000);
+	}
+	else
+		draw_strip(data, ray.wall_dist, column_x, 0xFFFFFF);
+
 }
 
 void	field_of_view(t_data *data)

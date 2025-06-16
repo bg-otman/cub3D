@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:00:12 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/10 17:56:16 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/11 18:02:53 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ bool	is_valid_door(char **map, int i, int j)
 		|| (map[i][j - 1] != '1' && map[i][j + 1] == '1')
 		|| (map[i - 1][j] == '1' && map[i + 1][j] != '1')
 		|| (map[i - 1][j] != '1' && map[i + 1][j] == '1'))
+		return (false);
+	if (map[i][j - 1] != '1' && map[i][j + 1] != '1'
+		&& map[i - 1][j] != '1' && map[i + 1][j] != '1')
 		return (false);
 	return (true);
 }
