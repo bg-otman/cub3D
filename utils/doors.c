@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:49:11 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/17 15:40:58 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/17 19:27:39 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ bool	is_door_close(t_data *data, int map_y, int map_x)
 void	init_doors(t_data *data)
 {
 	data->doors_count = count_doors(data->map);
+	if (data->doors_count == 0)
+		return ;
 	data->doors = ft_malloc(sizeof(t_door *) * data->doors_count + 1);
 	data->doors[data->doors_count - 1] = NULL;
 	set_doors_pos(data->map, data->doors);
