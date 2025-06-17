@@ -6,18 +6,47 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:53:57 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/17 13:15:53 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/17 19:24:04 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	draw_strip(t_data *data, double len, int x, int color)
+// void	draw_strip(t_data *data, double len, int x, int color)
+// {
+// 	double	strip;
+// 	double	first;
+// 	double	last;
+
+// 	strip = (TILE_SIZE / len) * ((WIN_WIDTH / 2) / tan(FOV / 2));
+// 	first = (WIN_HEIGHT / 2) - (strip / 2);
+// 	if (first < 0)
+// 		first = 0;
+// 	last = (WIN_HEIGHT / 2) + (strip / 2);
+// 	if (last > WIN_HEIGHT)
+// 		last = WIN_HEIGHT;
+// 	draw_sky(data, first, x);
+// 	draw_floor(data, last, x);
+// 	while (first <= last)
+// 	{
+// 		put_pixel_to_buffer(data->buffer, x, first, color);
+// 		first++;
+// 	}
+// }
+
+void	draw_strip(t_data *data, double len, int x, t_texture tex)
 {
 	double	strip;
 	double	first;
 	double	last;
 
+	if (tex.ray->side != 0)
+		tex.hit_offset = fmod(tex.ray->map_x, TILE_SIZE);
+	else
+		tex.hit_offset = fmod(tex.ray->map_y, TILE_SIZE);
+	tex.x = ((tex.hit_offset / TILE_SIZE) * tex.img->width);
+	if (tex.x < 0 || tex.x >= tex.img->width)
+		return;
 	strip = (TILE_SIZE / len) * ((WIN_WIDTH / 2) / tan(FOV / 2));
 	first = (WIN_HEIGHT / 2) - (strip / 2);
 	if (first < 0)
@@ -27,12 +56,21 @@ void	draw_strip(t_data *data, double len, int x, int color)
 		last = WIN_HEIGHT;
 	draw_sky(data, first, x);
 	draw_floor(data, last, x);
+	tex.draw_start = first;
 	while (first <= last)
 	{
-		put_pixel_to_buffer(data->buffer, x, first, color);
+		tex.ratio = (first - tex.draw_start) / strip;
+		tex.y = tex.ratio * tex.img->height;
+		if (tex.y < 0)
+			tex.y = 0;
+		else if (tex.y >= tex.img->height)
+			tex.y = tex.img->height - 1;
+		put_pixel_to_buffer(data->buffer, x, first,
+			get_pixel_color(tex.img, tex.x, tex.y));
 		first++;
 	}
 }
+
 
 int	my_bool(bool condition, int yes, int no)
 {
@@ -70,6 +108,7 @@ void ray_casting(t_data *data, double angle, int column_x)
 {
 	t_dda	ray;
 	t_door *door;
+	t_texture tex;
 
 	ray.map_x = (int)floor(data->player->x);
 	ray.map_y = (int)floor(data->player->y);
@@ -87,11 +126,16 @@ void ray_casting(t_data *data, double angle, int column_x)
 		ray.wall_dist = (double)((ray.map_x - data->player->x + (1 - ray.step_x) / 2) / cos(angle));
 	else
 		ray.wall_dist = (double)((ray.map_y - data->player->y + (1 - ray.step_y) / 2) / sin(angle));
+	tex.ray = &ray;
+	tex.img = data->wall_img;
 	door = get_door_at(data, ray.map_x / TILE_SIZE, ray.map_y / TILE_SIZE);
 	if (door)
-		draw_strip(data, ray.wall_dist, column_x, 0xFF0000);
+	{
+		tex.img = data->door_img;
+		draw_strip(data, ray.wall_dist, column_x, tex);
+	}
 	else
-		draw_strip(data, ray.wall_dist, column_x, 0xFFFFFF);
+		draw_strip(data, ray.wall_dist, column_x, tex);
 }
 
 void	field_of_view(t_data *data)

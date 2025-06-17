@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:11:43 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/11 13:49:31 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/17 19:23:23 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,6 @@ void	load_textures(t_data *data)
 	data->player_img = ft_malloc(sizeof(t_image *) * GUN_NUM_SPRITES + 1);
 	data->player_img[GUN_NUM_SPRITES - 1] = NULL;
 	load_sprites(data, data->player_img, "textures/gun", GUN_NUM_SPRITES);
+	init_texture(data, &data->door_img, "textures/door.xpm");
+	init_texture(data, &data->wall_img, "textures/wall_yellow.xpm");
 }

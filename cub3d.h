@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/17 13:18:21 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/17 19:21:25 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,18 @@ typedef struct s_door
 	bool	is_horizontal;
 }	t_door;
 
+typedef struct s_texture
+{
+	double	hit_offset;
+	double	x;
+	double	y;
+	double	ratio;
+	double	draw_start;
+	t_dda	*ray;
+	t_image *img;
+} t_texture;
+
+
 typedef struct s_data
 {
 	char		**map;
@@ -134,7 +146,9 @@ typedef struct s_data
 	char		*ea_path;
 	void		*mlx_ptr;
 	void		*win_ptr;
-	t_image		*img_wall;
+	t_texture	*tex;
+	t_image		*door_img;
+	t_image		*wall_img;
 	t_image		*buffer;
 	t_image		**player_img;
 	t_door		**doors;
@@ -164,6 +178,7 @@ int		mouse_rotate(int x, int y, t_data *data);
 void	put_img_to_buffer(t_image *buffer_img, t_image *img, int x, int y);
 void	get_player_pos(char **map, double *x, double *y, char *player_dir);
 void	put_pixel_to_buffer(t_image *img, int x, int y, int color);
+unsigned int	get_pixel_color(t_image *img, int x, int y);
 void	put_error(char	*msg, t_data *data, bool sys_error);
 void	clear_buffer_img(t_image *buffer, int color);
 void	load_textures(t_data *data);
