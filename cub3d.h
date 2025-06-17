@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/16 17:24:20 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/17 13:18:21 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ typedef struct s_door
 	int		map_y;
 	bool	is_opening;
 	bool	is_closing;
-	bool	is_moving;
+	bool	is_horizontal;
 }	t_door;
 
 typedef struct s_data
@@ -178,10 +178,10 @@ bool	is_valid_key(int key);
 int		skip_spacess(const char *str);
 bool	is_door(t_data *data, int x, int y);
 bool	is_door_close(t_data *data, int map_y, int map_x);
+bool	is_door_blocking_ray(t_data *data, t_dda ray);
 void	update_doors(t_data *data, t_door **doors);
 void	open_door(t_data *data, int plyr_x, int plyr_y);
 t_door	*get_door_at(t_data *data, int map_x, int map_y);
-bool	door_progress(t_data *data, t_dda ray);
 unsigned int	get_rgb_color(int red, int green, int blue);
 // clean_exit
 int		clean_exit(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:00:12 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/11 18:02:53 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/17 12:52:04 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,10 @@ static void	check_double_player(char c, bool *plyr_found, t_data *data)
 
 bool	is_valid_door(char **map, int i, int j)
 {
-	if (map[i][j + 1] == '1' && map[i][j - 1] == '1'
-		&& (map[i - 1][j] == '1' || map[i + 1][j] == '1'))
-			return (false);
-	if (map[i - 1][j] == '1' && map[i + 1][j] == '1'
-		&& (map[i][j + 1] == '1' || map[i][j - 1] == '1'))
-		return (false);
-	if ((map[i][j - 1] == '1' && map[i][j + 1] != '1')
-		|| (map[i][j - 1] != '1' && map[i][j + 1] == '1')
-		|| (map[i - 1][j] == '1' && map[i + 1][j] != '1')
-		|| (map[i - 1][j] != '1' && map[i + 1][j] == '1'))
-		return (false);
-	if (map[i][j - 1] != '1' && map[i][j + 1] != '1'
-		&& map[i - 1][j] != '1' && map[i + 1][j] != '1')
-		return (false);
-	return (true);
+	if ((map[i][j + 1] == '1' && map[i][j - 1] == '1')
+		|| (map[i - 1][j] == '1' && map[i + 1][j] == '1'))
+		return (true);
+	return (false);
 }
 
 void	check_invalid_chars(char **map, t_data *data)
