@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:08:24 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/04 20:27:03 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/11 14:07:08 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,6 @@ void	put_error(char *msg, t_data *data, bool sys_error)
 	ft_putstr_fd("\n", 2);
 	data->exit_status = EXIT_FAILURE;
 	clean_exit(data);
-}
-
-int	clean_exit(t_data *data)
-{
-	if (!data)
-		(free_garbage(), exit(EXIT_FAILURE));
-	if (data->win_ptr)
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	//// here free ressources loaded by mlx's funs
-	if (data->buffer)
-	{
-		if (data->buffer->img_ptr)
-			mlx_destroy_image(data->mlx_ptr, data->buffer->img_ptr);
-		free(data->buffer);
-	}
-	/////
-	if (data->mlx_ptr)
-	{
-		mlx_destroy_display(data->mlx_ptr);
-		free(data->mlx_ptr);
-	}
-	free_garbage();
-	exit(data->exit_status);
 }
 
 bool	check_textures(char *line)
@@ -84,8 +61,8 @@ void	get_player_pos(char **map, double	*x, double	*y, char *player_dir)
 			if (map[pos_y][pos_x] == 'N' || map[pos_y][pos_x] == 'W'
 				|| map[pos_y][pos_x] == 'S' || map[pos_y][pos_x] == 'E')
 			{
-				*x = MM_OFFSET_X + (pos_x * TILE_SIZE) - PLAYER_SIZE;
-				*y = MM_OFFSET_Y + (pos_y * TILE_SIZE) - PLAYER_SIZE;
+				*x = (pos_x * TILE_SIZE) + PLAYER_SIZE / 2;
+				*y = (pos_y * TILE_SIZE) + PLAYER_SIZE / 2;
 				*player_dir = map[pos_y][pos_x];
 				break ;
 			}

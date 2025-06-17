@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 15:43:09 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/03 21:24:56 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/15 16:28:41 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,28 +45,32 @@ int	mouse_rotate(int x, int y, t_data *data)
 	return (1);
 }
 
-void	ceiling_and_floor(t_data *data)
+void	draw_sky(t_data *data, double max_to_fill, int x)
 {
-	unsigned int	ceiling_clr;
-	unsigned int	floor_clr;
-
-	int(x), (y);
-	ceiling_clr = get_rgb_color(data->ceiling->r, data->ceiling->g,
+	double	y;
+	unsigned int clr;
+	
+	clr = get_rgb_color(data->ceiling->r, data->ceiling->g,
 			data->ceiling->b);
 	y = 0;
-	while (y < WIN_HEIGHT / 2)
+	while (y < max_to_fill)
 	{
-		x = 0;
-		while (x < WIN_WIDTH)
-			put_pixel_to_buffer(data->buffer, x++, y, ceiling_clr);
+		put_pixel_to_buffer(data->buffer, x, y, clr);
 		y++;
 	}
-	floor_clr = get_rgb_color(data->floor->r, data->floor->g, data->floor->b);
+}
+
+void	draw_floor(t_data *data, double floor_start, int x)
+{
+	double	y;
+	unsigned int clr;
+	
+	clr = get_rgb_color(data->floor->r, data->floor->g,
+			data->floor->b);
+	y = floor_start;
 	while (y < WIN_HEIGHT)
 	{
-		x = 0;
-		while (x < WIN_WIDTH)
-			put_pixel_to_buffer(data->buffer, x++, y, floor_clr);
+		put_pixel_to_buffer(data->buffer, x, y, clr);
 		y++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/04 20:45:30 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/17 19:21:25 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define DOWN 65364
 # define UP 65362
 # define ENTER 65293
+# define SPACE 32
 # define A_KEY 97
 # define S_KEY 115
 # define D_KEY 100
@@ -51,18 +52,17 @@
 # define MM_OFFSET_X 20
 # define MM_OFFSET_Y 20
 # define RAY_COLOR 0x29ab87
-# define MAX_RAY_LENGTH WIN_WIDTH
 # define NUM_RAYS WIN_WIDTH
-# define FOV (M_PI / 4)
+# define FOV (M_PI / 3)
 # define MM_VIEW_RANGE 5
 # define GUN_NUM_SPRITES 5
-# define TEXTURE_WIDTH 64
-# define TEXTURE_HEIGHT 64
 
 typedef struct s_dda
 {
 	double	step_x;
 	double	step_y;
+	double	ray_dir_x;
+	double	ray_dir_y;
 	double	side_dist_x;
 	double	side_dist_y;
 	double	map_x;
@@ -111,7 +111,6 @@ typedef struct s_view
 	int	end_col;
 } t_view;
 
-
 typedef struct s_frame
 {
 	double	x;
@@ -120,6 +119,28 @@ typedef struct s_frame
 	double	hieght;
 } t_frame;
 
+typedef struct s_door
+{
+	double	progress;
+	int		map_x;
+	int		map_y;
+	bool	is_opening;
+	bool	is_closing;
+	bool	is_horizontal;
+}	t_door;
+
+typedef struct s_texture
+{
+	double	hit_offset;
+	double	x;
+	double	y;
+	double	ratio;
+	double	draw_start;
+	t_dda	*ray;
+	t_image *img;
+} t_texture;
+
+
 typedef struct s_data
 {
 	char		**map;
@@ -127,12 +148,18 @@ typedef struct s_data
 	char		*so_path;
 	char		*we_path;
 	char		*ea_path;
+	t_image		*no;
+	t_image		*so;
+	t_image		*we;
+	t_image		*ea;
 	void		*mlx_ptr;
 	void		*win_ptr;
-	t_image		*img_wall;
-	t_image		*texture;
+	t_texture	*tex;
+	t_image		*door_img;
+	t_image		*wall_img;
 	t_image		*buffer;
 	t_image		**player_img;
+	t_door		**doors;
 	t_color		*floor;
 	t_color		*ceiling;
 	t_player	*player;
@@ -142,34 +169,45 @@ typedef struct s_data
 	int			map_width;
 	int			exit_status;
 	int			shoot_frame;
+	int			doors_count;
 	bool		is_shooting;
 } t_data;
 
 // src
 void	draw(t_data *data);
 void	move_player(int key, t_data *data);
-bool	is_wall(char **map, int x, int y);
+void	draw_sky(t_data *data, double max_to_fill, int x);
+void	draw_floor(t_data *data, double floor_start, int x);
+bool	is_wall(t_data *data, int x, int y);
 void	player_rotation(int key, t_data *data);
 void	field_of_view(t_data *data);
-void	ceiling_and_floor(t_data *data);
 int		mouse_rotate(int x, int y, t_data *data);
 // utils
-void	put_error(char	*msg, t_data *data, bool sys_error);
-void	init_buffer(t_data *data);
-void	put_pixel_to_buffer(t_image *img, int x, int y, int color);
-void	get_player_pos(char **map, double *x, double *y, char *player_dir);
-void	clear_buffer_img(t_image *buffer, int color);
-void	init_player(t_data *data);
-void	load_textures(t_data *data);
 void	put_img_to_buffer(t_image *buffer_img, t_image *img, int x, int y);
+void	get_player_pos(char **map, double *x, double *y, char *player_dir);
+void	put_pixel_to_buffer(t_image *img, int x, int y, int color);
+unsigned int	get_pixel_color(t_image *img, int x, int y);
+void	put_error(char	*msg, t_data *data, bool sys_error);
+void	clear_buffer_img(t_image *buffer, int color);
+void	load_textures(t_data *data);
+void	init_buffer(t_data *data);
+void	init_player(t_data *data);
+void	init_doors(t_data *data);
 bool	check_textures(char *line);
 bool	is_line_empty(char *line);
 bool	is_valid_char(char c);
 bool	ft_isspace(char c);
 bool	is_valid_key(int key);
 int		skip_spacess(const char *str);
-int		clean_exit(t_data *data);
+bool	is_door(t_data *data, int x, int y);
+bool	is_door_close(t_data *data, int map_y, int map_x);
+bool	is_door_blocking_ray(t_data *data, t_dda ray);
+void	update_doors(t_data *data, t_door **doors);
+void	open_door(t_data *data, int plyr_x, int plyr_y);
+t_door	*get_door_at(t_data *data, int map_x, int map_y);
 unsigned int	get_rgb_color(int red, int green, int blue);
+// clean_exit
+int		clean_exit(t_data *data);
 // parsing
 void	read_map(const char *map_path, int offset, t_data *data);
 void	get_map_data(const char *map_path, t_data *data);
@@ -180,6 +218,5 @@ void	map_len(int fd, t_data *data);
 void	draw_minimap(char **map, t_data *data);
 void	draw_frame(t_frame *frame, t_image *img, t_view  view);
 void	get_map_view_range(t_data *data);
-unsigned int	get_pixel_color(t_image *img, int x, int y);
 
 #endif
