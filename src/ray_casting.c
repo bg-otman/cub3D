@@ -12,34 +12,20 @@
 
 #include "../cub3d.h"
 
-// void	draw_strip(t_data *data, double len, int x, int color)
-// {
-// 	double	strip;
-// 	double	first;
-// 	double	last;
-
-// 	strip = (TILE_SIZE / len) * ((WIN_WIDTH / 2) / tan(FOV / 2));
-// 	first = (WIN_HEIGHT / 2) - (strip / 2);
-// 	if (first < 0)
-// 		first = 0;
-// 	last = (WIN_HEIGHT / 2) + (strip / 2);
-// 	if (last > WIN_HEIGHT)
-// 		last = WIN_HEIGHT;
-// 	draw_sky(data, first, x);
-// 	draw_floor(data, last, x);
-// 	while (first <= last)
-// 	{
-// 		put_pixel_to_buffer(data->buffer, x, first, color);
-// 		first++;
-// 	}
-// }
+void	draw_texture(t_data *data, int x, int y, t_texture tex)
+{
+	tex.y = tex.ratio * tex.img->height;
+	if (tex.y < 0)
+		tex.y = 0;
+	else if (tex.y >= tex.img->height)
+		tex.y = tex.img->height - 1;
+	put_pixel_to_buffer(data->buffer, x, y,
+		get_pixel_color(tex.img, tex.x, tex.y));
+}
 
 void	draw_strip(t_data *data, double len, int x, t_texture tex)
 {
-	double	strip;
-	double	first;
-	double	last;
-
+	double	(strip), (first), (last);
 	if (tex.ray->side != 0)
 		tex.hit_offset = fmod(tex.ray->map_x, TILE_SIZE);
 	else
@@ -49,8 +35,6 @@ void	draw_strip(t_data *data, double len, int x, t_texture tex)
 		return;
 	strip = (TILE_SIZE / len) * ((WIN_WIDTH / 2) / tan(FOV / 2));
 	first = (WIN_HEIGHT / 2) - (strip / 2);
-	if (first < 0)
-		first = 0;
 	last = (WIN_HEIGHT / 2) + (strip / 2);
 	if (last > WIN_HEIGHT)
 		last = WIN_HEIGHT;
@@ -60,17 +44,10 @@ void	draw_strip(t_data *data, double len, int x, t_texture tex)
 	while (first <= last)
 	{
 		tex.ratio = (first - tex.draw_start) / strip;
-		tex.y = tex.ratio * tex.img->height;
-		if (tex.y < 0)
-			tex.y = 0;
-		else if (tex.y >= tex.img->height)
-			tex.y = tex.img->height - 1;
-		put_pixel_to_buffer(data->buffer, x, first,
-			get_pixel_color(tex.img, tex.x, tex.y));
+		draw_texture(data, x, first, tex);
 		first++;
 	}
 }
-
 
 int	my_bool(bool condition, int yes, int no)
 {
