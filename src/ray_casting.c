@@ -52,8 +52,11 @@ void	draw_textures(t_data *data, t_texture tex, int x, double angle)
 void	implement_dda(t_dda *ray, t_data *data)
 {
 	ray->side = 0;
-	while (!is_wall(data, ray->map_x, ray->map_y))
+	while (!is_wall(data, ray->map_x, ray->map_y) || is_door(data, ray->map_x, ray->map_y))
 	{
+		if (is_door(data, ray->map_x, ray->map_y)
+			&& !is_door_blocking_ray(data, *ray))
+			return ;
 		if (ray->side_dist_x < ray->side_dist_y)
 		{
 			ray->side_dist_x += ray->delta_dist_x;
