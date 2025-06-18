@@ -1,7 +1,7 @@
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO textures/simonkraft/bookshelf.xpm
+SO textures/simonkraft/bookshelf_01.xpm
+WE textures/simonkraft/bookshelf_02.xpm
+EA textures/simonkraft/bookshelf_03.xpm
 
 F 255,255,255
 C 225,12,250

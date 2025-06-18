@@ -12,6 +12,13 @@
 
 #include "../cub3d.h"
 
+int	my_bool(bool condition, int yes, int no)
+{
+	if (condition)
+		return (yes);
+	return (no);
+}
+
 void	put_error(char *msg, t_data *data, bool sys_error)
 {
 	ft_putstr_fd(msg, 2);

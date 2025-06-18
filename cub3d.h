@@ -132,8 +132,12 @@ typedef struct s_door
 typedef struct s_texture
 {
 	double	hit_offset;
+	double	first;
+	double	last;
 	double	x;
 	double	y;
+	double	pos;
+	double	strip;
 	double	ratio;
 	double	draw_start;
 	t_dda	*ray;
@@ -218,5 +222,7 @@ void	map_len(int fd, t_data *data);
 void	draw_minimap(char **map, t_data *data);
 void	draw_frame(t_frame *frame, t_image *img, t_view  view);
 void	get_map_view_range(t_data *data);
+int		my_bool(bool condition, int yes, int no);
+t_image	*get_tex_img(t_data *data, t_texture tex);
 
 #endif
