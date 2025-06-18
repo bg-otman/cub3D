@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:59:44 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/10 16:57:31 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/18 16:46:27 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,23 @@ void	free_sprites(t_data *data, t_image **sprites, int sprites_num)
 
 int	clean_exit(t_data *data)
 {
-	
 	if (!data)
 		(free_garbage(), exit(EXIT_FAILURE));
 	if (data->win_ptr)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	//// here free ressources loaded by mlx's funs
 	if (data->buffer && data->buffer->img_ptr)
 		mlx_destroy_image(data->mlx_ptr, data->buffer->img_ptr);
+	if (data->door_img && data->door_img->img_ptr)
+		mlx_destroy_image(data->mlx_ptr, data->door_img->img_ptr);
+	if (data->no && data->no->img_ptr)
+		mlx_destroy_image(data->mlx_ptr, data->no->img_ptr);
+	if (data->so && data->so->img_ptr)
+		mlx_destroy_image(data->mlx_ptr, data->so->img_ptr);
+	if (data->ea && data->ea->img_ptr)
+		mlx_destroy_image(data->mlx_ptr, data->ea->img_ptr);
+	if (data->we && data->we->img_ptr)
+		mlx_destroy_image(data->mlx_ptr, data->we->img_ptr);
 	free_sprites(data, data->player_img, GUN_NUM_SPRITES);
-	/////
 	if (data->mlx_ptr)
 	{
 		mlx_destroy_display(data->mlx_ptr);

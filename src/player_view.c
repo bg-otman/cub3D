@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 15:43:09 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/15 16:28:41 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/18 16:55:09 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	player_rotation(int key, t_data *data)
 
 int	mouse_rotate(int x, int y, t_data *data)
 {
-	static int old_x = -1;
-	int delta;
-	(void) y;
+	static int	old_x = -1;
+	int			delta;
 
+	(void)y;
 	if (old_x == -1)
 		old_x = x;
 	delta = x - old_x;
@@ -45,13 +45,22 @@ int	mouse_rotate(int x, int y, t_data *data)
 	return (1);
 }
 
+void	get_wall_hieght(t_data *data, t_dda *ray, double angle)
+{
+	if (ray->side == 0)
+		ray->wall_dist = (double)((ray->map_x - data->player->x + (1
+						- ray->step_x) / 2) / cos(angle));
+	else
+		ray->wall_dist = (double)((ray->map_y - data->player->y + (1
+						- ray->step_y) / 2) / sin(angle));
+}
+
 void	draw_sky(t_data *data, double max_to_fill, int x)
 {
-	double	y;
-	unsigned int clr;
-	
-	clr = get_rgb_color(data->ceiling->r, data->ceiling->g,
-			data->ceiling->b);
+	double			y;
+	unsigned int	clr;
+
+	clr = get_rgb_color(data->ceiling->r, data->ceiling->g, data->ceiling->b);
 	y = 0;
 	while (y < max_to_fill)
 	{
@@ -62,11 +71,10 @@ void	draw_sky(t_data *data, double max_to_fill, int x)
 
 void	draw_floor(t_data *data, double floor_start, int x)
 {
-	double	y;
-	unsigned int clr;
-	
-	clr = get_rgb_color(data->floor->r, data->floor->g,
-			data->floor->b);
+	double			y;
+	unsigned int	clr;
+
+	clr = get_rgb_color(data->floor->r, data->floor->g, data->floor->b);
 	y = floor_start;
 	while (y < WIN_HEIGHT)
 	{

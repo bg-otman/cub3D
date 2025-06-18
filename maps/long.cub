@@ -1,10 +1,10 @@
-NO textures/test/north.xpm
-SO textures/test/south.xpm
-WE textures/test/west.xpm
-EA textures/test/east.xpm
+NO textures/wall_yellow.xpm
+SO textures/wall_yellow.xpm
+WE textures/matrix.xpm
+EA textures/matrix.xpm
 
-F 20,20,20
-C 200,200,200
+C 144,224,239
+F 204,197,176
 
 111
 1S1
@@ -19,7 +19,7 @@ C 200,200,200
 101
 101
 101
-101
+1D1
 101
 101
 101

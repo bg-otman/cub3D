@@ -6,11 +6,36 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 15:16:44 by obouizi           #+#    #+#             */
-/*   Updated: 2025/05/25 15:38:58 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/18 16:49:40 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+t_image	*get_tex_img(t_data *data, t_texture tex)
+{
+	t_door	*door;
+
+	if (tex.ray->side == 0)
+	{
+		if (tex.ray->ray_dir_x > 0)
+			tex.img = data->ea;
+		else
+			tex.img = data->we;
+	}
+	else
+	{
+		if (tex.ray->ray_dir_y > 0)
+			tex.img = data->so;
+		else
+			tex.img = data->no;
+	}
+	door = get_door_at(data, tex.ray->map_x / TILE_SIZE,
+			tex.ray->map_y / TILE_SIZE);
+	if (door)
+		tex.img = data->door_img;
+	return (tex.img);
+}
 
 void	clear_buffer_img(t_image *buffer, int color)
 {

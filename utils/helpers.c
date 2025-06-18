@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 18:24:23 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/10 16:53:02 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/18 16:49:28 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	skip_spacess(const char *str)
 
 bool	is_valid_char(char c)
 {
-	return (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == 'D');
+	return (c == '0' || c == 'N' || c == 'S'
+		|| c == 'E' || c == 'W' || c == 'D');
 }
 
 bool	is_line_empty(char *line)

@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:11:43 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/17 19:23:23 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/18 16:47:16 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	init_buffer(t_data *data)
 
 void	init_player(t_data *data)
 {
-	t_player *player;
-	
+	t_player	*player;
+
 	player = ft_malloc(sizeof(t_player));
 	data->player = player;
 	ft_bzero(player, sizeof(t_player));
@@ -88,10 +88,12 @@ void	load_sprites(t_data *mlx, t_image **sprites, char *path, int sprite_num)
 
 void	load_textures(t_data *data)
 {
-	// player sprites
 	data->player_img = ft_malloc(sizeof(t_image *) * GUN_NUM_SPRITES + 1);
 	data->player_img[GUN_NUM_SPRITES - 1] = NULL;
 	load_sprites(data, data->player_img, "textures/gun", GUN_NUM_SPRITES);
-	init_texture(data, &data->door_img, "textures/stop.xpm");
-	init_texture(data, &data->wall_img, "textures/wall_yellow.xpm");
+	init_texture(data, &data->door_img, "textures/door.xpm");
+	init_texture(data, &data->ea, data->ea_path);
+	init_texture(data, &data->so, data->so_path);
+	init_texture(data, &data->we, data->we_path);
+	init_texture(data, &data->no, data->no_path);
 }

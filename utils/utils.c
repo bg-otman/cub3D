@@ -6,11 +6,18 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:08:24 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/11 14:07:08 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/18 16:47:55 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+int	my_bool(bool condition, int yes, int no)
+{
+	if (condition)
+		return (yes);
+	return (no);
+}
 
 void	put_error(char *msg, t_data *data, bool sys_error)
 {
@@ -49,9 +56,9 @@ bool	check_textures(char *line)
 
 void	get_player_pos(char **map, double	*x, double	*y, char *player_dir)
 {
-	int pos_x;
-	int pos_y;
-	
+	int	pos_x;
+	int	pos_y;
+
 	pos_y = 0;
 	while (map[pos_y])
 	{
