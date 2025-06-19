@@ -12,6 +12,15 @@
 
 #include "../cub3d.h"
 
+void	shoot(t_image *buffer, t_image **player_img, int shoot_frame)
+{
+	int	sprite_index;
+
+	sprite_index = (shoot_frame / 10) % GUN_NUM_SPRITES;
+	put_img_to_buffer(buffer, player_img[sprite_index], WIN_WIDTH / 1.8,
+		WIN_HEIGHT - player_img[sprite_index]->height - 1);
+}
+
 bool	ft_isspace(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
@@ -26,12 +35,6 @@ int	skip_spacess(const char *str)
 	while (str && str[i] && ft_isspace(str[i]))
 		i++;
 	return (i);
-}
-
-bool	is_valid_char(char c)
-{
-	return (c == '0' || c == 'N' || c == 'S'
-		|| c == 'E' || c == 'W' || c == 'D');
 }
 
 bool	is_line_empty(char *line)

@@ -170,7 +170,6 @@ typedef struct s_data
 }				t_data;
 
 // src
-void			draw(t_data *data);
 void			move_player(int key, t_data *data);
 void			draw_sky(t_data *data, double max_to_fill, int x);
 void			draw_floor(t_data *data, double floor_start, int x);
@@ -206,6 +205,7 @@ void			open_door(t_data *data, int plyr_x, int plyr_y);
 t_door			*get_door_at(t_data *data, int map_x, int map_y);
 unsigned int	get_rgb_color(int red, int green, int blue);
 t_image			*get_tex_img(t_data *data, t_texture tex);
+void	shoot(t_image *buffer, t_image **player_img, int shoot_frame);
 // clean_exit
 int				clean_exit(t_data *data);
 // parsing

@@ -15,7 +15,7 @@
 bool	is_valid_char(char c)
 {
 	return (c == '0' || c == 'N' || c == 'S'
-		|| c == 'E' || c == 'W');
+		|| c == 'E' || c == 'W' || c == 'D');
 }
 
 int	key_press(int key, t_data *data)
@@ -24,16 +24,38 @@ int	key_press(int key, t_data *data)
 		clean_exit(data);
 	if (is_valid_key(key))
 		move_player(key, data);
+	if (key == ENTER && !data->is_shooting)
+		data->is_shooting = true;
+	if (key == SPACE)
+		open_door(data, data->player->x, data->player->y);
 	return (1);
 }
 
-int draw(t_data *data)
+void	draw(t_data *data)
 {
 	clear_buffer_img(data->buffer, 0x000000);
 	field_of_view(data);
+	draw_minimap(data->map, data);
+	shoot(data->buffer, data->player_img, data->shoot_frame);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->buffer->img_ptr,
 		0, 0);
-    return (0);
+}
+
+int	update_frame(t_data *data)
+{
+	if (data->is_shooting)
+	{
+		if (data->shoot_frame < GUN_NUM_SPRITES * 10)
+			data->shoot_frame++;
+		else
+		{
+			data->is_shooting = false;
+			data->shoot_frame = 0;
+		}
+	}
+	update_doors(data, data->doors);
+	draw(data);
+	return (0);
 }
 
 int	main(int ac, char *av[])
@@ -52,10 +74,12 @@ int	main(int ac, char *av[])
 		put_error("Error\nFailed to open window : ", &data, true);
 	init_buffer(&data);
 	init_player(&data);
+	init_doors(&data);
 	load_textures(&data);
 	mlx_hook(data.win_ptr, 2, 1L << 0, key_press, (t_data *)&data);
 	mlx_hook(data.win_ptr, 17, 0, clean_exit, (t_data *)&data);
-	mlx_loop_hook(data.mlx_ptr, draw, (t_data *)&data);
+	mlx_hook(data.win_ptr, 6, 1L << 6, mouse_rotate, (t_data *)&data);
+	mlx_loop_hook(data.mlx_ptr, update_frame, (t_data *)&data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }
