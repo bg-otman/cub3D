@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:00:12 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/17 12:52:04 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/20 22:51:24 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,19 @@
 
 static void	is_valid_file(const char *map_path, t_data *data)
 {
-	int		fd;
-	int		len;
+	int			fd;
+	int			len;
+	const char	*file_name;
 
 	len = ft_strlen(map_path);
+	file_name = map_path + len - 1;
+	while (file_name > map_path && *(file_name - 1) != '/')
+		file_name--;
 	if (len < 5 || ft_strncmp(&map_path[ft_strlen(map_path) - 4], ".cub", 4)
-		|| map_path[len - 5] == '/')
+		|| file_name[0] == '.')
 		put_error("Error\nOnly valid \".cub\" map files are allowed!",
-			data, false);
+			data,
+			false);
 	fd = open(map_path, O_RDONLY);
 	if (fd == -1)
 		put_error("Error\nError opening map file : ", data, true);
@@ -41,8 +46,8 @@ static void	check_double_player(char c, bool *plyr_found, t_data *data)
 
 bool	is_valid_door(char **map, int i, int j)
 {
-	if ((map[i][j + 1] == '1' && map[i][j - 1] == '1')
-		|| (map[i - 1][j] == '1' && map[i + 1][j] == '1'))
+	if ((map[i][j + 1] == '1' && map[i][j - 1] == '1') || (map[i - 1][j] == '1'
+			&& map[i + 1][j] == '1'))
 		return (true);
 	return (false);
 }
