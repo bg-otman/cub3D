@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/21 18:52:44 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/21 20:59:59 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ void			draw_floor(t_data *data, double floor_start, int x);
 bool			is_wall(t_data *data, int x, int y);
 void			player_rotation(int key, t_data *data);
 void			field_of_view(t_data *data);
-void			get_wall_hieght(t_data *data, t_dda *ray, double angle);
+void			get_wall_distance(t_data *data, t_dda *ray, double angle);
 int				mouse_rotate(int x, int y, t_data *data);
 // utils
 void			put_img_to_buffer(t_image *buffer_img, t_image *img, int x,

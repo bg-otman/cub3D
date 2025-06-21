@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 15:43:09 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/18 16:55:09 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/21 20:59:47 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	mouse_rotate(int x, int y, t_data *data)
 	return (1);
 }
 
-void	get_wall_hieght(t_data *data, t_dda *ray, double angle)
+void	get_wall_distance(t_data *data, t_dda *ray, double angle)
 {
 	if (ray->side == 0)
 		ray->wall_dist = (double)((ray->map_x - data->player->x + (1

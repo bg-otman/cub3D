@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:53:57 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/18 16:45:50 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/21 21:00:06 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	ray_casting(t_data *data, double angle, int column_x)
 		ray.side_dist_y = ((ray.map_y + 1.0) - data->player->y)
 			* ray.delta_dist_y;
 	implement_dda(&ray, data);
-	get_wall_hieght(data, &ray, angle);
+	get_wall_distance(data, &ray, angle);
 	tex.ray = &ray;
 	tex.img = get_tex_img(data, tex);
 	draw_textures(data, tex, column_x, angle);
