@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/18 17:03:48 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/21 18:52:44 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@
 # define FOV 1.0471975512 // M_PI / 3
 # define MM_VIEW_RANGE 5
 # define GUN_NUM_SPRITES 5
+# define HAND_SPRITES 11
 
 typedef struct s_dda
 {
@@ -76,6 +77,7 @@ typedef struct s_image
 	int			line_size;
 	int			width;
 	int			height;
+	bool		has_green_screen;
 }				t_image;
 
 typedef struct s_color
@@ -155,6 +157,7 @@ typedef struct s_data
 	t_image		*wall_img;
 	t_image		*buffer;
 	t_image		**player_img;
+	t_image		**hand_sprites;
 	t_door		**doors;
 	t_color		*floor;
 	t_color		*ceiling;
@@ -165,6 +168,7 @@ typedef struct s_data
 	int			map_width;
 	int			exit_status;
 	int			shoot_frame;
+	int			hand_frame;
 	int			doors_count;
 	bool		is_shooting;
 }				t_data;
@@ -201,11 +205,13 @@ bool			is_door(t_data *data, int x, int y);
 bool			is_door_close(t_data *data, int map_y, int map_x);
 bool			is_door_blocking_ray(t_data *data, t_dda ray);
 void			update_doors(t_data *data, t_door **doors);
+void			hand_animation(t_image *buffer, t_image **hand_sprites,
+					int hand_frame);
 void			open_door(t_data *data, int plyr_x, int plyr_y);
 t_door			*get_door_at(t_data *data, int map_x, int map_y);
 unsigned int	get_rgb_color(int red, int green, int blue);
 t_image			*get_tex_img(t_data *data, t_texture tex);
-void	shoot(t_image *buffer, t_image **player_img, int shoot_frame);
+void			shoot(t_image *buffer, t_image **player_img, int shoot_frame);
 // clean_exit
 int				clean_exit(t_data *data);
 // parsing

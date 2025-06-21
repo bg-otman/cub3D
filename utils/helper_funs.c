@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_exit.c                                       :+:      :+:    :+:   */
+/*   helper_funs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:59:44 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/18 16:46:27 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/21 20:14:21 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	clean_exit(t_data *data)
 	if (data->we && data->we->img_ptr)
 		mlx_destroy_image(data->mlx_ptr, data->we->img_ptr);
 	free_sprites(data, data->player_img, GUN_NUM_SPRITES);
+	free_sprites(data, data->hand_sprites, HAND_SPRITES);
 	if (data->mlx_ptr)
 	{
 		mlx_destroy_display(data->mlx_ptr);
@@ -53,4 +54,19 @@ int	clean_exit(t_data *data)
 	}
 	free_garbage();
 	exit(data->exit_status);
+}
+
+unsigned int	get_pixel_color(t_image *img, int x, int y)
+{
+	return (*(unsigned int *)((img->pixel_data + (y * img->line_size) + (x
+				* img->bpp / 8))));
+}
+
+void	hand_animation(t_image *buffer, t_image **hand_sprites, int hand_frame)
+{
+	int	sprite_index;
+
+	sprite_index = (hand_frame / 15) % HAND_SPRITES;
+	put_img_to_buffer(buffer, hand_sprites[sprite_index], WIN_WIDTH / 4.5,
+		WIN_HEIGHT - hand_sprites[sprite_index]->height - 1);
 }

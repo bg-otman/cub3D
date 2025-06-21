@@ -1,6 +1,6 @@
 PARSING = parsing/get_next_line/get_next_line.c parsing/get_next_line/get_next_line_utils.c parsing/parser.c \
 parsing/get_map_data.c parsing/read_map.c
-UTILS = utils/utils.c utils/init.c utils/helpers.c utils/put_pixels.c utils/clean_exit.c utils/doors.c \
+UTILS = utils/utils.c utils/init.c utils/helpers.c utils/put_pixels.c utils/helper_funs.c utils/doors.c \
 utils/doors_utils.c
 MINIMAP = minimap/draw_minimap.c minimap/minimap_frame.c
 SRCS +=  src/move_player.c src/ray_casting.c src/player_view.c $(PARSING) $(UTILS) $(MINIMAP)

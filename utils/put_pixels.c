@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 15:16:44 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/18 16:49:40 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/21 20:23:33 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ t_image	*get_tex_img(t_data *data, t_texture tex)
 		else
 			tex.img = data->no;
 	}
-	door = get_door_at(data, tex.ray->map_x / TILE_SIZE,
-			tex.ray->map_y / TILE_SIZE);
+	door = get_door_at(data, tex.ray->map_x / TILE_SIZE, tex.ray->map_y
+			/ TILE_SIZE);
 	if (door)
 		tex.img = data->door_img;
 	return (tex.img);
@@ -53,6 +53,15 @@ void	clear_buffer_img(t_image *buffer, int color)
 	}
 }
 
+bool	is_green_screen_color(int color)
+{
+	int (r), (g), (b);
+	r = (color >> 16) & 0xFF;
+	g = (color >> 8) & 0xFF;
+	b = color & 0xFF;
+	return (r < 100 && g > 150 && b < 100);
+}
+
 void	put_pixel_to_buffer(t_image *img, int x, int y, int color)
 {
 	char	*dst;
@@ -66,16 +75,11 @@ void	put_pixel_to_buffer(t_image *img, int x, int y, int color)
 	}
 }
 
-unsigned int	get_pixel_color(t_image *img, int x, int y)
-{
-	return (*(unsigned int *)((img->pixel_data + (y * img->line_size) + (x
-				* img->bpp / 8))));
-}
-
 void	put_img_to_buffer(t_image *buffer_img, t_image *img, int x, int y)
 {
 	int	i;
 	int	j;
+	int	color;
 
 	if (!img || !buffer_img)
 		return ;
@@ -85,8 +89,10 @@ void	put_img_to_buffer(t_image *buffer_img, t_image *img, int x, int y)
 		i = 0;
 		while (i < img->width)
 		{
-			put_pixel_to_buffer(buffer_img, x + i, y + j, get_pixel_color(img,
-					i, j));
+			color = get_pixel_color(img, i, j);
+			if (!img->has_green_screen || (img->has_green_screen
+					&& !is_green_screen_color(color)))
+				put_pixel_to_buffer(buffer_img, x + i, y + j, color);
 			i++;
 		}
 		j++;

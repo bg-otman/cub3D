@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:49 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/18 16:53:33 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/21 20:14:18 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	draw(t_data *data)
 	field_of_view(data);
 	draw_minimap(data->map, data);
 	shoot(data->buffer, data->player_img, data->shoot_frame);
+	hand_animation(data->buffer, data->hand_sprites, data->hand_frame);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->buffer->img_ptr,
 		0, 0);
 }
@@ -53,6 +54,10 @@ int	update_frame(t_data *data)
 			data->shoot_frame = 0;
 		}
 	}
+	if (data->hand_frame < HAND_SPRITES * 15)
+		data->hand_frame++;
+	else
+		data->hand_frame = 0;
 	update_doors(data, data->doors);
 	draw(data);
 	return (0);
