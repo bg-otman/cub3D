@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 15:16:44 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/21 20:23:33 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/22 15:50:09 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ bool	is_green_screen_color(int color)
 	r = (color >> 16) & 0xFF;
 	g = (color >> 8) & 0xFF;
 	b = color & 0xFF;
-	return (r < 100 && g > 150 && b < 100);
+	return (r < 100 && g > 100 && b < 100);
 }
 
 void	put_pixel_to_buffer(t_image *img, int x, int y, int color)

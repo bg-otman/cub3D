@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:59:44 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/21 20:14:21 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/22 15:17:49 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,5 @@ void	hand_animation(t_image *buffer, t_image **hand_sprites, int hand_frame)
 
 	sprite_index = (hand_frame / 15) % HAND_SPRITES;
 	put_img_to_buffer(buffer, hand_sprites[sprite_index], WIN_WIDTH / 4.5,
-		WIN_HEIGHT - hand_sprites[sprite_index]->height - 1);
+		WIN_HEIGHT - hand_sprites[sprite_index]->height);
 }
