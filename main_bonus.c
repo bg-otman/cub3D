@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:49 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/22 17:58:22 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/22 18:11:45 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	main(int ac, char *av[])
 	load_textures(&data);
 	mlx_hook(data.win_ptr, 2, 1L << 0, key_press, (t_data *)&data);
 	mlx_hook(data.win_ptr, 17, 0, clean_exit, (t_data *)&data);
-	mlx_mouse_hide(data.mlx_ptr, data.win_ptr);
 	mlx_hook(data.win_ptr, 6, 1L << 6, mouse_rotate, (t_data *)&data);
 	mlx_mouse_hook(data.win_ptr, mouse_click, (t_data *)&data);
 	mlx_loop_hook(data.mlx_ptr, update_frame, (t_data *)&data);
