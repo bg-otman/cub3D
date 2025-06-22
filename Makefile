@@ -7,20 +7,18 @@ SRCS +=  src/move_player.c src/ray_casting.c src/player_view.c $(PARSING) $(UTIL
 LIBFT = libft/libft.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-MLX_LIB = mlx/libmlx_Linux.a -lX11 -lXext -lm
+MLX_LIB = -lmlx -lX11 -lXext -lm
 OBJS = $(SRCS:.c=.o)
 MANDATORY_OBJS = main.o $(OBJS)
 BONUS_OBJS = main_bonus.o $(OBJS)
-MANDATORY = /tmp/.mandatory_build
 BONUS = /tmp/.bonus_build
 INCLUDES = cub3d.h parsing/get_next_line/get_next_line.h
 NAME = cub3D
 
-all: $(MANDATORY)
+all: $(NAME)
 
-$(MANDATORY): $(MANDATORY_OBJS) $(LIBFT) $(MLX_LIB)
+$(NAME): $(MANDATORY_OBJS) $(LIBFT) $(MLX_LIB)
 	@$(CC) $(CFLAGS) $(MANDATORY_OBJS) $(MLX_LIB) $(LIBFT) -o $(NAME)
-	@touch $(MANDATORY)
 	@rm -f $(BONUS)
 	@echo "cub3D is ready 📦✅"
 	@echo "\033[1;34m╔══════════════════════════════════════════════╗\033[0m"
@@ -36,7 +34,6 @@ bonus: $(BONUS)
 $(BONUS): $(BONUS_OBJS) $(LIBFT) $(MLX_LIB)
 	@$(CC) $(CFLAGS) $(BONUS_OBJS) $(MLX_LIB) $(LIBFT) -o $(NAME)
 	@touch $(BONUS)
-	@rm -f $(MANDATORY)
 	@echo "cub3D bonus is ready 📦✅"
 	@echo "\033[1;34m╔══════════════════════════════════════════════╗\033[0m"
 	@echo "\033[1;34m║               \033[1;33mGAME CONTROLS\033[1;34m                  ║\033[0m"
@@ -62,7 +59,7 @@ $(MLX_LIB) :
 
 clean:
 	@echo "cleaning...🛠️"
-	@rm -f $(MANDATORY_OBJS) $(BONUS_OBJS) $(MANDATORY) $(BONUS)
+	@rm -f $(MANDATORY_OBJS) $(BONUS_OBJS) $(BONUS)
 	@$(MAKE) --no-print-directory -C libft clean
 
 fclean: clean

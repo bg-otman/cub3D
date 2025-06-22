@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/21 20:59:59 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/22 17:58:43 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define CUB3D_H
 
 # include "libft/libft.h"
-# include "mlx/mlx.h"
 # include "parsing/get_next_line/get_next_line.h"
+# include <mlx.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>
@@ -212,6 +212,7 @@ t_door			*get_door_at(t_data *data, int map_x, int map_y);
 unsigned int	get_rgb_color(int red, int green, int blue);
 t_image			*get_tex_img(t_data *data, t_texture tex);
 void			shoot(t_image *buffer, t_image **player_img, int shoot_frame);
+int				mouse_click(int button, int x, int y, t_data *data);
 // clean_exit
 int				clean_exit(t_data *data);
 // parsing

@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 15:43:09 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/21 20:59:47 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/22 18:02:41 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,16 @@ void	player_rotation(int key, t_data *data)
 
 int	mouse_rotate(int x, int y, t_data *data)
 {
-	static int	old_x = -1;
-	int			delta;
+	int	center_x;
+	int	delta;
 
 	(void)y;
-	if (old_x == -1)
-		old_x = x;
-	delta = x - old_x;
+	center_x = WIN_WIDTH / 2;
+	delta = x - center_x;
 	if (delta == 0)
 		return (0);
 	data->player->angle += delta * (data->player->rotation_speed / 15);
-	old_x = x;
+	mlx_mouse_move(data->mlx_ptr, data->win_ptr, center_x, WIN_HEIGHT / 2);
 	return (1);
 }
 

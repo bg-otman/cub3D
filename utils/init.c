@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:11:43 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/21 21:11:08 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/22 17:48:18 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	load_textures(t_data *data)
 	data->hand_sprites[HAND_SPRITES - 1] = NULL;
 	load_sprites(data, data->hand_sprites, "textures/hand_sprites/",
 		HAND_SPRITES);
-	init_texture(data, &data->door_img, "textures/door.xpm");
+	init_texture(data, &data->door_img, "textures/wall_yellow.xpm");
 	init_texture(data, &data->ea, data->ea_path);
 	init_texture(data, &data->so, data->so_path);
 	init_texture(data, &data->we, data->we_path);

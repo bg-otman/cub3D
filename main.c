@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:49 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/18 16:53:33 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/22 17:01:05 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 bool	is_valid_char(char c)
 {
-	return (c == '0' || c == 'N' || c == 'S'
-		|| c == 'E' || c == 'W');
+	return (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
 int	key_press(int key, t_data *data)
@@ -27,13 +26,13 @@ int	key_press(int key, t_data *data)
 	return (1);
 }
 
-int draw(t_data *data)
+int	draw(t_data *data)
 {
 	clear_buffer_img(data->buffer, 0x000000);
 	field_of_view(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->buffer->img_ptr,
 		0, 0);
-    return (0);
+	return (0);
 }
 
 int	main(int ac, char *av[])

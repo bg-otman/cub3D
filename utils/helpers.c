@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 18:24:23 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/22 15:18:00 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/22 17:13:36 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	shoot(t_image *buffer, t_image **player_img, int shoot_frame)
 	int	sprite_index;
 
 	sprite_index = (shoot_frame / 10) % GUN_NUM_SPRITES;
-	put_img_to_buffer(buffer, player_img[sprite_index], WIN_WIDTH / 1.8,
+	put_img_to_buffer(buffer, player_img[sprite_index], WIN_WIDTH / 1.6,
 		WIN_HEIGHT - player_img[sprite_index]->height);
 }
 

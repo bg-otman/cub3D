@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:59:44 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/22 15:17:49 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/22 17:59:45 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,15 @@ void	hand_animation(t_image *buffer, t_image **hand_sprites, int hand_frame)
 	int	sprite_index;
 
 	sprite_index = (hand_frame / 15) % HAND_SPRITES;
-	put_img_to_buffer(buffer, hand_sprites[sprite_index], WIN_WIDTH / 4.5,
+	put_img_to_buffer(buffer, hand_sprites[sprite_index], WIN_WIDTH / 4.8,
 		WIN_HEIGHT - hand_sprites[sprite_index]->height);
+}
+
+int	mouse_click(int button, int x, int y, t_data *data)
+{
+	(void) x;
+	(void) y;
+	if (button == 1 && !data->is_shooting)
+		data->is_shooting = true;
+	return (0);
 }

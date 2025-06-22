@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:52:22 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/10 18:02:39 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/22 17:02:04 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ void	draw_direction(t_data *data, int x, int y, double angle)
 	}
 }
 
-void	draw_player(t_data *data, double center_x, double center_y,
-		int radius)
+void	draw_player(t_data *data, double center_x, double center_y, int radius)
 {
 	int (x), (y), (dx), (dy);
 	y = center_y - radius;
@@ -71,42 +70,42 @@ void	draw_player(t_data *data, double center_x, double center_y,
 	}
 }
 
-void display_player(t_data *data)
+void	display_player(t_data *data)
 {
-    double x;
-    double y;
+	double	x;
+	double	y;
 
-    x = MM_OFFSET_X + ((data->player->x / TILE_SIZE) - data->view.start_col) * MM_TILE_SIZE
-        - ((PLAYER_SIZE * MINIMAP_SCALE) / 2) + MM_TILE_SIZE / 2;
-    y = MM_OFFSET_Y + ((data->player->y / TILE_SIZE) - data->view.start_row) * MM_TILE_SIZE
-        - ((PLAYER_SIZE * MINIMAP_SCALE) / 2) + MM_TILE_SIZE / 2;
-    draw_player(data, x, y, (PLAYER_SIZE * MINIMAP_SCALE));
-    draw_direction(data, x, y, data->player->angle);
+	x = MM_OFFSET_X + ((data->player->x / TILE_SIZE) - data->view.start_col)
+		* MM_TILE_SIZE - ((PLAYER_SIZE * MINIMAP_SCALE) / 2) + MM_TILE_SIZE / 2;
+	y = MM_OFFSET_Y + ((data->player->y / TILE_SIZE) - data->view.start_row)
+		* MM_TILE_SIZE - ((PLAYER_SIZE * MINIMAP_SCALE) / 2) + MM_TILE_SIZE / 2;
+	draw_player(data, x, y, (PLAYER_SIZE * MINIMAP_SCALE));
+	draw_direction(data, x, y, data->player->angle);
 }
 
 void	draw_minimap(char **map, t_data *data)
 {
-    int i, j, x, y;
-    get_map_view_range(data);
+	int (i), (j), (x), (y);
+	get_map_view_range(data);
 	draw_frame(&data->frame, data->buffer, data->view);
-    i = data->view.start_row;
+	i = data->view.start_row;
 	while (i <= data->view.end_row)
-    {
-        j = data->view.start_col;
-        while (j <= data->view.end_col)
-        {
-            x = MM_OFFSET_X + (j - data->view.start_col) * MM_TILE_SIZE;
-            y = MM_OFFSET_Y + (i - data->view.start_row) * MM_TILE_SIZE;
+	{
+		j = data->view.start_col;
+		while (j <= data->view.end_col)
+		{
+			x = MM_OFFSET_X + (j - data->view.start_col) * MM_TILE_SIZE;
+			y = MM_OFFSET_Y + (i - data->view.start_row) * MM_TILE_SIZE;
 			draw_block(data, x - 1, y - 1, 0x000000);
-            if (map[i][j] == '1')
-                draw_block(data, x, y, 0x0047ab);
+			if (map[i][j] == '1')
+				draw_block(data, x, y, 0x0047ab);
 			else if (map[i][j] == 'D')
 				draw_block(data, x, y, 0xf7a829);
-            else if (!ft_isspace(map[i][j]))
-                draw_block(data, x, y, 0xFFFFFF);
-            j++;
-        }
-        i++;
-    }
-    display_player(data);
+			else if (!ft_isspace(map[i][j]))
+				draw_block(data, x, y, 0xFFFFFF);
+			j++;
+		}
+		i++;
+	}
+	display_player(data);
 }
