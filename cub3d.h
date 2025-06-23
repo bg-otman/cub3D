@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:51:13 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/22 17:58:43 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/23 08:36:38 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ typedef struct s_data
 	t_image		*door_img;
 	t_image		*wall_img;
 	t_image		*buffer;
-	t_image		**player_img;
+	t_image		**player_img; // gun sprites
 	t_image		**hand_sprites;
 	t_door		**doors;
 	t_color		*floor;
