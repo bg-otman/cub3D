@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:10:15 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/15 18:38:37 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/23 13:12:57 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ bool	is_wall(t_data *data, int x, int y)
 void	is_collision(t_data *data, double x, double y)
 {
 	if (!(is_wall(data, x, y)
-			|| is_wall(data, x + PLAYER_SIZE - 1, y)
-			|| is_wall(data, x, y + PLAYER_SIZE - 1)
-			|| is_wall(data, x + PLAYER_SIZE - 1, y + PLAYER_SIZE - 1)))
+			|| is_wall(data, x + PLAYER_SIZE, y)
+			|| is_wall(data, x, y + PLAYER_SIZE)
+			|| is_wall(data, x + PLAYER_SIZE, y + PLAYER_SIZE)))
 	{
 		data->player->x = x;
 		data->player->y = y;

@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 15:16:44 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/22 15:50:09 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/23 14:19:17 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,25 @@ t_image	*get_tex_img(t_data *data, t_texture tex)
 {
 	t_door	*door;
 
+	door = get_door_at(data, tex.ray->map_x / TILE_SIZE, tex.ray->map_y
+			/ TILE_SIZE);
+	if (door || is_door(data, tex.ray->map_x + 1, tex.ray->map_y)
+		|| is_door(data, tex.ray->map_x, tex.ray->map_y + 1))
+		return (data->door_img);
 	if (tex.ray->side == 0)
 	{
 		if (tex.ray->ray_dir_x > 0)
-			tex.img = data->ea;
+			return (data->ea);
 		else
-			tex.img = data->we;
+			return (data->we);
 	}
 	else
 	{
 		if (tex.ray->ray_dir_y > 0)
-			tex.img = data->so;
+			return (data->so);
 		else
-			tex.img = data->no;
+			return (data->no);
 	}
-	door = get_door_at(data, tex.ray->map_x / TILE_SIZE, tex.ray->map_y
-			/ TILE_SIZE);
-	if (door)
-		tex.img = data->door_img;
-	return (tex.img);
 }
 
 void	clear_buffer_img(t_image *buffer, int color)

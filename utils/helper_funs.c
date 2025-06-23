@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:59:44 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/22 18:10:46 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/06/23 14:15:12 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	free_sprites(t_data *data, t_image **sprites, int sprites_num)
 		return ;
 	while (i < sprites_num)
 	{
-		if (sprites[i])
+		if (sprites[i] && sprites[i]->img_ptr)
 			mlx_destroy_image(data->mlx_ptr, sprites[i]->img_ptr);
 		i++;
 	}
