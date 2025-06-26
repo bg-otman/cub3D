@@ -88,7 +88,7 @@ C 30,30,30
 111111
 1N0D01
 101101
-1D0001
+1D1001
 111111
 ```
 - 0 → empty space
@@ -127,6 +127,7 @@ make bonus
 
 ---
 🙌 Credits
+
 Developed by @bg-otman and @Aymanesaj, as part of 42/1337 Network’s Cub3D project.
 
 
