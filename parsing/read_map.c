@@ -70,13 +70,13 @@ void	check_walls(char **map, t_data *data)
 	i = 1;
 	while (i < data->map_height - 1)
 	{
-		if (!ft_isspace(map[i][0]) && map[i][0] != '1')
+		if (!map[i] || (!ft_isspace(map[i][0]) && map[i][0] != '1'))
 			put_error("Error\nInvalid map", data, false);
 		check_is_surrounded(map[i - 1], map[i], map[i + 1], data);
 		i++;
 	}
 	j = 0;
-	while (map && map[i][j])
+	while (map && map[i] && map[i][j])
 	{
 		if (map[i][j] != '1' && !ft_isspace(map[i][j]))
 			put_error("Error\nInvalid map", data, false);
@@ -114,10 +114,10 @@ char	*add_padding(char *line, int space_num)
 
 void	read_map(const char *map_path, int offset, t_data *data)
 {
-	int		fd;
 	char	*tmp;
-	int		i;
 
+	int (fd), (i);
+	tmp = NULL;
 	data->map = ft_malloc(sizeof(char *) * (data->map_height + 1));
 	fd = open(map_path, O_RDONLY);
 	if (fd == -1)
@@ -133,5 +133,10 @@ void	read_map(const char *map_path, int offset, t_data *data)
 		tmp = get_next_line(fd);
 	}
 	data->map[i] = NULL;
+	if (!data->map || !data->map[0])
+	{
+		close(fd);
+		put_error("Error\nInvalid Map", data, false);
+	}
 	close(fd);
 }

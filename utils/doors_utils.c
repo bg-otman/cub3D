@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:35:24 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/23 13:49:02 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/08/25 15:22:24 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,18 @@ bool	is_door_blocking_ray(t_data *data, t_dda ray)
 	double	hit_offset;
 	double	fraction;
 
-	door = get_door_at(data, ray.map_x / TILE_SIZE, ray.map_y / TILE_SIZE);
+	door = get_door_at(data, ray.map_x, ray.map_y);
 	if (!door)
-		return (true);
+		return (false);
 	if (door->is_horizontal)
 		hit_offset = fmod(ray.map_x, TILE_SIZE);
 	else
 		hit_offset = fmod(ray.map_y, TILE_SIZE);
 	fraction = hit_offset / TILE_SIZE;
 	if (fraction >= 1.0 - door->progress)
-		return (true);
-	else
 		return (false);
+	else
+		return (true);
 }
 
 void	open_door(t_data *data, int plyr_x, int plyr_y)

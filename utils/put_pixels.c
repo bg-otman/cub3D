@@ -16,8 +16,7 @@ t_image	*get_tex_img(t_data *data, t_texture tex)
 {
 	t_door	*door;
 
-	door = get_door_at(data, tex.ray->map_x / TILE_SIZE, tex.ray->map_y
-			/ TILE_SIZE);
+	door = get_door_at(data, tex.ray->map_x, tex.ray->map_y);
 	if (door || is_door(data, tex.ray->map_x + 1, tex.ray->map_y)
 		|| is_door(data, tex.ray->map_x, tex.ray->map_y + 1))
 		return (data->door_img);

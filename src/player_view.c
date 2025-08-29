@@ -12,6 +12,30 @@
 
 #include "../cub3d.h"
 
+void	get_side_distance_and_step(t_dda *ray)
+{
+	if (ray->ray_dir_x < 0)
+	{
+		ray->step_x = -1;
+		ray->side_dist_x = (ray->pos_x - ray->map_x) * ray->delta_dist_x;
+	}
+	else
+	{
+		ray->step_x = 1;
+		ray->side_dist_x = (ray->map_x + 1.0 - ray->pos_x) * ray->delta_dist_x;
+	}
+	if (ray->ray_dir_y < 0)
+	{
+		ray->step_y = -1;
+		ray->side_dist_y = (ray->pos_y - ray->map_y) * ray->delta_dist_y;
+	}
+	else
+	{
+		ray->step_y = 1;
+		ray->side_dist_y = (ray->map_y + 1.0 - ray->pos_y) * ray->delta_dist_y;
+	}
+}
+
 void	player_rotation(int key, t_data *data)
 {
 	t_player	*player;
@@ -42,16 +66,6 @@ int	mouse_rotate(int x, int y, t_data *data)
 	data->player->angle += delta * (data->player->rotation_speed / 15);
 	mlx_mouse_move(data->mlx_ptr, data->win_ptr, center_x, WIN_HEIGHT / 2);
 	return (1);
-}
-
-void	get_wall_distance(t_data *data, t_dda *ray, double angle)
-{
-	if (ray->side == 0)
-		ray->wall_dist = (double)((ray->map_x - data->player->x + (1
-						- ray->step_x) / 2) / cos(angle));
-	else
-		ray->wall_dist = (double)((ray->map_y - data->player->y + (1
-						- ray->step_y) / 2) / sin(angle));
 }
 
 void	draw_sky(t_data *data, double max_to_fill, int x)

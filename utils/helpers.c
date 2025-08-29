@@ -39,6 +39,8 @@ int	skip_spacess(const char *str)
 
 bool	is_line_empty(char *line)
 {
+	if (!line)
+		return (false);
 	while (*line)
 	{
 		if (!ft_isspace(*line))

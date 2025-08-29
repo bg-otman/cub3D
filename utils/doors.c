@@ -70,6 +70,8 @@ bool	is_door(t_data *data, int x, int y)
 
 	map_x = (x / TILE_SIZE);
 	map_y = (y / TILE_SIZE);
+	if (map_x < 0 || map_x >= (int)ft_strlen(data->map[map_y]))
+		return (true);
 	if (data->map[map_y][map_x] == 'D')
 		return (true);
 	return (false);

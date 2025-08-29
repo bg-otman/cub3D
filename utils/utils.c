@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:08:24 by obouizi           #+#    #+#             */
-/*   Updated: 2025/06/18 16:47:55 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/08/07 15:00:23 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ bool	check_textures(char *line)
 	i = skip_spacess(line);
 	if (!line[i])
 		return (true);
+	line += i;
+	i = 0;
 	if (!ft_strncmp("F", line, 1) || !ft_strncmp("C", line, 1))
 	{
 		i++;

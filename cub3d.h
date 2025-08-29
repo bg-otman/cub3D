@@ -40,28 +40,30 @@
 # define WIN_WIDTH 1000
 # define WIN_HEIGHT 500
 # define TILE_SIZE 30
-# define PLAYER_SIZE 15 // TILE_SIZE / 2
-# define MINIMAP_SCALE 0.4
-# define MM_TILE_SIZE 12 // TILE_SIZE * MM_SCALE
-# define MM_OFFSET_X 20
-# define MM_OFFSET_Y 20
-# define RAY_COLOR 0x29ab87
 # define NUM_RAYS WIN_WIDTH
-# define FOV 1.0471975512 // M_PI / 3
+# define MINIMAP_SCALE 0.4
+# define MM_OFFSET_X 20
+# define MM_TILE_SIZE 12 // (TILE_SIZE * MINIMAP_SCALE)
+# define MM_OFFSET_Y 20
+# define PLAYER_SIZE 15 // (TILE_SIZE / 2)
+# define RAY_COLOR 0x29ab87
+# define FOV 1.0471975512
 # define MM_VIEW_RANGE 5
 # define GUN_NUM_SPRITES 5
 # define HAND_SPRITES 11
 
 typedef struct s_dda
 {
+	double		pos_x;
+	double		pos_y;
 	double		step_x;
 	double		step_y;
 	double		ray_dir_x;
 	double		ray_dir_y;
 	double		side_dist_x;
 	double		side_dist_y;
-	double		map_x;
-	double		map_y;
+	int			map_x;
+	int			map_y;
 	double		wall_dist;
 	double		delta_dist_x;
 	double		delta_dist_y;
@@ -180,7 +182,6 @@ void			draw_floor(t_data *data, double floor_start, int x);
 bool			is_wall(t_data *data, int x, int y);
 void			player_rotation(int key, t_data *data);
 void			field_of_view(t_data *data);
-void			get_wall_distance(t_data *data, t_dda *ray, double angle);
 int				mouse_rotate(int x, int y, t_data *data);
 // utils
 void			put_img_to_buffer(t_image *buffer_img, t_image *img, int x,
@@ -213,6 +214,7 @@ unsigned int	get_rgb_color(int red, int green, int blue);
 t_image			*get_tex_img(t_data *data, t_texture tex);
 void			shoot(t_image *buffer, t_image **player_img, int shoot_frame);
 int				mouse_click(int button, int x, int y, t_data *data);
+void			get_side_distance_and_step(t_dda *ray);
 // clean_exit
 int				clean_exit(t_data *data);
 // parsing
