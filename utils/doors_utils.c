@@ -55,20 +55,25 @@ bool	is_door_blocking_ray(t_data *data, t_dda ray)
 {
 	t_door	*door;
 	double	hit_offset;
-	double	fraction;
+	double	t;
 
+	double (hit_x_px), (hit_y_px);
+	if (ray.side == 0)
+		t = (ray.map_x - ray.pos_x + (1 - ray.step_x) / 2.0) / ray.ray_dir_x;
+	else
+		t = (ray.map_y - ray.pos_y + (1 - ray.step_y) / 2.0) / ray.ray_dir_y;
+	hit_x_px = (ray.pos_x + (ray.ray_dir_x * t)) * TILE_SIZE;
+	hit_y_px = (ray.pos_y + (ray.ray_dir_y * t)) * TILE_SIZE;
 	door = get_door_at(data, ray.map_x, ray.map_y);
 	if (!door)
 		return (false);
 	if (door->is_horizontal)
-		hit_offset = fmod(ray.map_x, TILE_SIZE);
+		hit_offset = fmod(hit_x_px, TILE_SIZE) / TILE_SIZE;
 	else
-		hit_offset = fmod(ray.map_y, TILE_SIZE);
-	fraction = hit_offset / TILE_SIZE;
-	if (fraction >= 1.0 - door->progress)
-		return (false);
-	else
+		hit_offset = fmod(hit_y_px, TILE_SIZE) / TILE_SIZE;
+	if (hit_offset >= 1.0 - door->progress)
 		return (true);
+	return (false);
 }
 
 void	open_door(t_data *data, int plyr_x, int plyr_y)

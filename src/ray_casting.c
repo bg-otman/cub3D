@@ -70,8 +70,9 @@ void	implement_dda(t_dda *ray, t_data *data)
 	ray->side = 0;
 	while (data->map[ray->map_y][ray->map_x] != '1')
 	{
-		// if (is_door_blocking_ray(data, *ray))
-		// 	return ;
+		if (data->map[ray->map_y][ray->map_x] == 'D'
+				&& !is_door_blocking_ray(data, *ray))
+			break ;
 		if (ray->side_dist_x < ray->side_dist_y)
 		{
 			ray->side_dist_x += ray->delta_dist_x;
